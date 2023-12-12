@@ -29,6 +29,7 @@ public class AUTO2 extends LinearOpMode {
     public void runOpMode() {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
+        waitForStart();
         Trajectory traiectorie = drive.trajectoryBuilder(new Pose2d(-37, -57, 0))
                 .forward(40)
                 .splineTo(new Vector2d(35, -11),0)

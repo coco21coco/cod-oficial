@@ -20,32 +20,61 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 public class TeleOP extends LinearOpMode {
     //HMap robot = new HMap();
 
-
-
-
     @Override
     public void runOpMode() throws InterruptedException {
         //robot.init(hardwareMap);
+
+        HMap robot = new HMap();
 
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
         FtcDashboard dashboard = FtcDashboard.getInstance();
         Telemetry dashtelemtry = dashboard.getTelemetry();
 
+        double speed = 100;
+
         drive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        robot.init(hardwareMap);
 
         waitForStart();
+
+
         while(opModeIsActive()) {
 
             drive.setWeightedDrivePower(
                     new Pose2d(
-                            -gamepad1.left_stick_y,
-                            gamepad1.left_stick_x,
-                            -gamepad1.right_stick_x
+                            -gamepad1.left_stick_y * speed / 100,
+                            -gamepad1.left_stick_x * speed / 100,
+                            -gamepad1.right_stick_x * speed / 100
                     )
             );
 
             drive.update();
             Pose2d poseEstimate = drive.getPoseEstimate();
+
+
+            if(gamepad1.a)
+                speed = 50;
+            if(gamepad1.b )
+                speed = 85;
+
+            if(gamepad2.b)
+                robot.colectare.setPower(1);
+            else
+                robot.colectare.setPower(0);
+
+            if(gamepad2.a)
+                robot.colectare.setPower(-1);
+
+
+
+            if(gamepad2.left_stick_button)
+                robot.avion.setPosition(robot.avion_tras);
+
+            if(gamepad2.right_stick_button)
+                robot.avion.setPosition(robot.avion_armat);
+
+
+            telemetry.addData("viteza coaie: ", speed);
             telemetry.addData("x", poseEstimate.getX());
             telemetry.addData("y", poseEstimate.getY());
             telemetry.addData("heading", poseEstimate.getHeading());

@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.teamcode.drive.HMap;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
 
@@ -28,12 +29,20 @@ public class AUTO extends LinearOpMode {
     public void runOpMode() {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
+        HMap robot = new HMap();
+
+        waitForStart();
+        robot.init(hardwareMap);
+
        Trajectory traiectorie = drive.trajectoryBuilder(new Pose2d(13, -60, 0))
-                .forward(50)
+                .forward(70)
                 .build();
 
        drive.followTrajectory(traiectorie);
 
+       robot.colectare.setPower(1);
+       sleep(200);
+       robot.colectare.setPower(0);
 
     }
 }
