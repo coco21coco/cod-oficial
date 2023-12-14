@@ -1,13 +1,22 @@
 package org.firstinspires.ftc.teamcode.auto;
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.drive.HMap;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
+import org.openftc.apriltag.AprilTagDetection;
+import org.openftc.easyopencv.OpenCvCamera;
+import org.openftc.easyopencv.OpenCvCameraFactory;
+import org.openftc.easyopencv.OpenCvCameraRotation;
+
+import java.util.ArrayList;
 
 
 @Autonomous(name = "Auto Close")
@@ -27,22 +36,115 @@ public class AUTO extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
+
+
+        OpenCvCamera camera;
+        AprilTagDetectionPipeline aprilTagDetectionPipeline;
 
         HMap robot = new HMap();
-
-        waitForStart();
+        SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
         robot.init(hardwareMap);
 
-       Trajectory traiectorie = drive.trajectoryBuilder(new Pose2d(13, -60, 0))
-                .forward(70)
-                .build();
+        double fx = 578.272;
+        double fy = 578.272;
+        double cx = 402.145;
+        double cy = 221.506;
 
-       drive.followTrajectory(traiectorie);
+        // UNITS ARE METERS
+        double tagsize = 0.166;
 
-       robot.colectare.setPower(1);
-       sleep(200);
-       robot.colectare.setPower(0);
+        AprilTagDetection tagOfInterest = null;
 
+        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
+        aprilTagDetectionPipeline = new AprilTagDetectionPipeline(tagsize, fx, fy, cx, cy);
+
+        camera.setPipeline(aprilTagDetectionPipeline);
+        camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener()
+        {
+            @Override
+            public void onOpened()
+            {
+                camera.startStreaming(800,448, OpenCvCameraRotation.UPRIGHT);
+            }
+
+            @Override
+            public void onError(int errorCode)
+            {
+
+            }
+        });
+
+        telemetry.setMsTransmissionInterval(50);
+
+
+        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
+
+        telemetry.update();
+
+        while (!isStarted() && !isStopRequested())
+        {
+            ArrayList<AprilTagDetection> currentDetections = aprilTagDetectionPipeline.getLatestDetections();
+
+            if(currentDetections.size() != 0)
+            {
+                boolean tagFound = false;
+
+                for(AprilTagDetection tag : currentDetections)
+                {
+                    if(tag.id == 1)
+                    {
+                        tagOfInterest = tag;
+                        tagFound = true;
+                        break;
+                    }
+                }
+
+            }
+            if(tagOfInterest != null)
+            {
+                telemetry.addLine("Tag snapshot:\n");
+                tagToTelemetry(tagOfInterest);
+                telemetry.addData("x: ", tagOfInterest.pose.x);
+                telemetry.update();
+            }
+
+            telemetry.update();
+            sleep(20);
+        }
+
+        waitForStart();
+        if(tagOfInterest != null) {
+            while (tagOfInterest.pose.x < 100 && !isStopRequested()) {
+
+                telemetry.addData("case 1", tagOfInterest.pose.x);
+                telemetry.update();
+            }
+
+            while (tagOfInterest.pose.x > 100 && tagOfInterest.pose.x < 200 && !isStopRequested()) {
+
+                telemetry.addData("case 2", tagOfInterest.pose.x);
+                telemetry.update();
+            }
+
+            while (tagOfInterest.pose.x > 200 && !isStopRequested()) {
+
+                telemetry.addData("case 3", tagOfInterest.pose.x);
+                telemetry.update();
+            }
+        }
+        else
+            telemetry.addData("muie", tagOfInterest.toString());
+            telemetry.update();
+
+
+
+
+
+    }
+
+    void tagToTelemetry(AprilTagDetection detection)
+    {
+        telemetry.addLine(String.format("\nDetected tag ID=%d", detection.id));
     }
 }

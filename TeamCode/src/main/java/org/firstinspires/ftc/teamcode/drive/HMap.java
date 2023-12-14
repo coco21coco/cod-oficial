@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.drive;
 
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -9,7 +10,8 @@ public class HMap {
 
 
 
-    public DcMotorEx colectare = null;
+    public DcMotorEx colectare = null,
+                     glisiere = null;
 
     public Servo avion = null;
 
@@ -18,7 +20,9 @@ public class HMap {
    public void init(HardwareMap hmap){
 
       colectare = hmap.get(DcMotorEx.class, "colectare");
+      glisiere = hmap.get(DcMotorEx.class, "glisiere");
 
+      glisiere.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
       avion = hmap.get(Servo.class, "avion");
       avion.setPosition(avion_armat);
    }

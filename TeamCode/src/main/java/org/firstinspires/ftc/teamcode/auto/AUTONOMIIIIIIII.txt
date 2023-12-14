@@ -1,0 +1,90 @@
+ROSU
+    Close:
+    Parcare MJL:
+           case 1
+           new Pose2d(13, -60, Math.toRadians(90)))
+                                           .splineTo(new Vector2d(7.5, -35.9), Math.toRadians(130))
+                                           .back(10)
+                                           .splineTo(new Vector2d(59, -11), Math.toRadians(0))
+           case 2
+                new Pose2d(13, -60, Math.toRadians(90)))
+                                                .forward(32)
+                                                .back(10)
+                                                .splineTo(new Vector2d(59, -11), Math.toRadians(0))
+           case 3
+           new Pose2d(13, -60, Math.toRadians(90)))
+                                           .splineTo(new Vector2d(15.9, -35.9), Math.toRadians(40))
+                                           .back(7)
+                                           .lineToSplineHeading(new Pose2d(11, -11, Math.toRadians(180)))
+                                           .lineToSplineHeading(new Pose2d(59, -11, Math.toRadians(180)))
+                                           .build()
+
+            COLT:
+            case 1
+            new Pose2d(13, -60, Math.toRadians(90)))
+                                            .splineTo(new Vector2d(7.5, -35.9), Math.toRadians(130))
+                                            .back(10)
+                                            .splineTo(new Vector2d(59, -58), Math.toRadians(0))
+            case 2
+            new Pose2d(13, -60, Math.toRadians(90)))
+                                            .forward(32)
+                                            .back(10)
+                                            .splineTo(new Vector2d(59, -58), Math.toRadians(0))
+            case 3
+            new Pose2d(13, -60, Math.toRadians(90)))
+                                            .splineTo(new Vector2d(15.9, -35.9), Math.toRadians(40))
+                                            .back(7)
+                                            .lineToSplineHeading(new Pose2d(48, -58, Math.toRadians(0)))
+                                            .forward(10)
+
+
+    Far: Parcare MJL:
+                    case 1 // pixel pe stanga
+                    new Pose2d(-35, -60, Math.toRadians(90)))
+                                            .splineTo(new Vector2d(-35, -35), Math.toRadians(130))
+                                            .back(5)
+                                            .turn(1)
+                                            .lineTo(new Vector2d(10, -35))
+                                            .splineTo(new Vector2d(65, -15), Math.toRadians(-90))
+
+                    case 2 // lasa pe mijloc
+                    new Pose2d(-35, -60, Math.toRadians(90)))
+                                                    .splineTo(new Vector2d(-35, -35), Math.toRadians(90))
+                                                    .back(5)
+                                                    .turn(5)
+                                                    .lineTo(new Vector2d(10, -35))
+                                                    .splineTo(new Vector2d(65, -15), Math.toRadians(-90))
+                    case 3  // lasa pe dreapta
+                    new Pose2d(-35, -60, Math.toRadians(90)))
+                                                    .splineTo(new Vector2d(-35, -35), Math.toRadians(45))
+                                                    .back(5)
+                                                    .turn(-0.8)
+                                                    .lineTo(new Vector2d(10, -38))
+                                                    .turn(0.5)
+                                                    .splineTo(new Vector2d(65, -15), Math.toRadians(-90))
+                    COLT:
+                    case 1
+                    case 2
+                    case 3
+
+
+ALBASTRU
+     Close: Parcare MJL:
+                       case 1
+                       case 2
+                       case 3
+
+                        COLT:
+                        case 1
+                        case 2
+                        case 3
+
+     Far: Parcare MJL:
+                     case 1
+                     case 2
+                     case 3
+
+                      COLT:
+                      case 1
+                      case 2
+                      case 3

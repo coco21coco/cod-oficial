@@ -57,6 +57,8 @@ public class TeleOP extends LinearOpMode {
             if(gamepad1.b )
                 speed = 85;
 
+            // colectare
+
             if(gamepad2.b)
                 robot.colectare.setPower(1);
             else
@@ -65,7 +67,7 @@ public class TeleOP extends LinearOpMode {
             if(gamepad2.a)
                 robot.colectare.setPower(-1);
 
-
+            // avion
 
             if(gamepad2.left_stick_button)
                 robot.avion.setPosition(robot.avion_tras);
@@ -73,6 +75,14 @@ public class TeleOP extends LinearOpMode {
             if(gamepad2.right_stick_button)
                 robot.avion.setPosition(robot.avion_armat);
 
+            // glisiere
+            if(gamepad2.dpad_up)
+                robot.glisiere.setPower(1);
+            else
+                robot.glisiere.setPower(0);
+
+            if(gamepad2.dpad_down)
+                robot.glisiere.setPower(-1);
 
             telemetry.addData("viteza coaie: ", speed);
             telemetry.addData("x", poseEstimate.getX());
