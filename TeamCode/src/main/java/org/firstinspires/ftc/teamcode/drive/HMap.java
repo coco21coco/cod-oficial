@@ -13,17 +13,25 @@ public class HMap {
     public DcMotorEx colectare = null,
                      glisiere = null;
 
-    public Servo avion = null;
+    public Servo cutie = null,
+                avion = null;
 
-    public static double avion_armat = 0.2,
-                    avion_tras = 0;
+    public static double cutie_inkis = 0.25,
+                    cutie_deskis = 0,
+
+                    avion_armat = 0.45,
+                    avion_tras = 0.7;
    public void init(HardwareMap hmap){
 
       colectare = hmap.get(DcMotorEx.class, "colectare");
       glisiere = hmap.get(DcMotorEx.class, "glisiere");
 
       glisiere.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+      cutie = hmap.get(Servo.class, "cutie");
       avion = hmap.get(Servo.class, "avion");
+
       avion.setPosition(avion_armat);
+      cutie.setPosition(cutie_inkis);
    }
 }

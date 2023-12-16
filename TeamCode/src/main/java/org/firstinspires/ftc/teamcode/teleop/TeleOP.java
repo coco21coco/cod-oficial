@@ -67,14 +67,19 @@ public class TeleOP extends LinearOpMode {
             if(gamepad2.a)
                 robot.colectare.setPower(-1);
 
-            // avion
+            // cutie
 
-            if(gamepad2.left_stick_button)
+            if(gamepad2.left_stick_button) {
+                robot.cutie.setPosition(robot.cutie_deskis);
+                sleep(300);
+                robot.cutie.setPosition(robot.cutie_inkis);
+            }
+
+            if(gamepad2.y){
                 robot.avion.setPosition(robot.avion_tras);
-
-            if(gamepad2.right_stick_button)
+                sleep(200);
                 robot.avion.setPosition(robot.avion_armat);
-
+            }
             // glisiere
             if(gamepad2.dpad_up)
                 robot.glisiere.setPower(1);

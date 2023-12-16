@@ -3,7 +3,9 @@ package org.firstinspires.ftc.teamcode.auto;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
+import com.acmerobotics.roadrunner.trajectory.TrajectoryBuilder;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -19,7 +21,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 import java.util.ArrayList;
 
 
-@Autonomous(name = "Auto Close")
+@Autonomous(name = "Rosu Close")
 public class AUTO extends LinearOpMode {
     /*
     *  drive.trajectorySequenceBuilder(new Pose2d(13, -60, 0))
@@ -114,21 +116,46 @@ public class AUTO extends LinearOpMode {
         }
 
         waitForStart();
+
         if(tagOfInterest != null) {
-            while (tagOfInterest.pose.x < 100 && !isStopRequested()) {
+
+            if (tagOfInterest.pose.x < -0.5 && !isStopRequested()) {
+
+                Trajectory traiect = drive.trajectoryBuilder(new Pose2d(13, -60, Math.toRadians(90)))
+                        .splineTo(new Vector2d(7.5, -35.9), Math.toRadians(130))
+                        .back(10)
+                        .splineTo(new Vector2d(59, -11), Math.toRadians(0))
+                                .build();
+
+                drive.followTrajectory(traiect);
 
                 telemetry.addData("case 1", tagOfInterest.pose.x);
                 telemetry.update();
             }
 
-            while (tagOfInterest.pose.x > 100 && tagOfInterest.pose.x < 200 && !isStopRequested()) {
+            if (tagOfInterest.pose.x > -0.5 && tagOfInterest.pose.x < 0.5 && !isStopRequested()) {
 
+                Trajectory trajectory= drive.trajectoryBuilder( new Pose2d(13, -60, Math.toRadians(90)))
+                        .forward(32)
+                        .back(10)
+                        .splineTo(new Vector2d(59, -11), Math.toRadians(0))
+                        .build();
+
+                drive.followTrajectory(trajectory);
                 telemetry.addData("case 2", tagOfInterest.pose.x);
                 telemetry.update();
             }
 
-            while (tagOfInterest.pose.x > 200 && !isStopRequested()) {
+            if (tagOfInterest.pose.x > 0.5 && !isStopRequested()) {
 
+                Trajectory trjct = drive.trajectoryBuilder(new Pose2d(13, -60, Math.toRadians(90)))
+                        .splineTo(new Vector2d(15.9, -35.9), Math.toRadians(40))
+                        .back(7)
+                        .lineToSplineHeading(new Pose2d(11, -11, Math.toRadians(180)))
+                        .lineToSplineHeading(new Pose2d(59, -11, Math.toRadians(180)))
+                        .build();
+
+                drive.followTrajectory(trjct);
                 telemetry.addData("case 3", tagOfInterest.pose.x);
                 telemetry.update();
             }
