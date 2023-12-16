@@ -160,9 +160,6 @@ public class AUTO extends LinearOpMode {
                 telemetry.update();
             }
         }
-        else
-            telemetry.addData("muie", tagOfInterest.toString());
-            telemetry.update();
 
 
 
