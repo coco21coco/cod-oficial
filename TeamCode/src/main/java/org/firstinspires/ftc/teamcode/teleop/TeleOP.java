@@ -1,5 +1,8 @@
 package org.firstinspires.ftc.teamcode.teleop;
 
+import android.graphics.Camera;
+
+import com.acmerobotics.dashboard.DashboardCore;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
@@ -12,25 +15,31 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.drive.HMap;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
+import org.opencv.core.Mat;
 
 
 @TeleOp(name = "TeleOP", group = "TeleOP")
 @Config
 
 public class TeleOP extends LinearOpMode {
+
+    HMap robot = new HMap();
+
+    SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
+    FtcDashboard dashboard = FtcDashboard.getInstance();
+
+    Telemetry dashtelemtry = dashboard.getTelemetry();
+
+    double speed = 100;
+
+    boolean toggle_unghi = false;
+    double unghi_curent = 0;
+
     //HMap robot = new HMap();
 
     @Override
     public void runOpMode() throws InterruptedException {
         //robot.init(hardwareMap);
-
-        HMap robot = new HMap();
-
-        SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
-        FtcDashboard dashboard = FtcDashboard.getInstance();
-        Telemetry dashtelemtry = dashboard.getTelemetry();
-
-        double speed = 100;
 
         drive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         robot.init(hardwareMap);
@@ -50,6 +59,18 @@ public class TeleOP extends LinearOpMode {
 
             drive.update();
             Pose2d poseEstimate = drive.getPoseEstimate();
+
+
+            if(gamepad1.right_bumper) {
+                toggle_unghi = true;
+                unghi_curent = drive.getExternalHeading();
+            }
+
+            if(gamepad1.left_bumper)
+                toggle_unghi = false;
+
+            if(toggle_unghi)
+                maintain_angle(unghi_curent, 0.1);
 
 
             if(gamepad1.a)
@@ -89,11 +110,23 @@ public class TeleOP extends LinearOpMode {
             if(gamepad2.dpad_down)
                 robot.glisiere.setPower(-1);
 
-            telemetry.addData("viteza coaie: ", speed);
-            telemetry.addData("x", poseEstimate.getX());
-            telemetry.addData("y", poseEstimate.getY());
-            telemetry.addData("heading", poseEstimate.getHeading());
-            telemetry.update();
+            dashtelemtry.addData("viteza coaie: ", speed);
+            dashtelemtry.addData("x", poseEstimate.getX());
+            dashtelemtry.addData("y", poseEstimate.getY());
+            dashtelemtry.addData("heading", poseEstimate.getHeading());
+            dashtelemtry.update();
         }
+    }
+
+    public void maintain_angle(double angl, double speed){
+        double unghi = drive.getExternalHeading();
+
+        if(unghi - angl > Math.toRadians(3))
+            drive.setMotorPowers(-speed, -speed,   speed, speed);
+
+        else
+            if(unghi - angl < -Math.toRadians(3))
+                drive.setMotorPowers(speed, speed, -speed, -speed);
+
     }
 }
