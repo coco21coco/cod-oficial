@@ -19,8 +19,8 @@ public class HMap {
     public static double cutie_inkis = 0.25,
                     cutie_deskis = 0,
 
-                    avion_armat = 0.45,
-                    avion_tras = 0.7;
+                    avion_armat = 0.6,
+                    avion_tras = 0.8;
    public void init(HardwareMap hmap){
 
       colectare = hmap.get(DcMotorEx.class, "colectare");

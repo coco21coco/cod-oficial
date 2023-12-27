@@ -42,8 +42,8 @@ public class TeleOP extends LinearOpMode {
 
             drive.setWeightedDrivePower(
                     new Pose2d(
-                            -gamepad1.left_stick_y * speed / 100,
-                            -gamepad1.left_stick_x * speed / 100,
+                            gamepad1.left_stick_y * speed / 100,
+                            gamepad1.left_stick_x * speed / 100,
                             -gamepad1.right_stick_x * speed / 100
                     )
             );
@@ -71,7 +71,7 @@ public class TeleOP extends LinearOpMode {
 
             if(gamepad2.left_stick_button) {
                 robot.cutie.setPosition(robot.cutie_deskis);
-                sleep(300);
+                sleep(800);
                 robot.cutie.setPosition(robot.cutie_inkis);
             }
 
@@ -81,13 +81,15 @@ public class TeleOP extends LinearOpMode {
                 robot.avion.setPosition(robot.avion_armat);
             }
             // glisiere
-            if(gamepad2.dpad_up)
+            if(gamepad2.dpad_down)
                 robot.glisiere.setPower(1);
             else
                 robot.glisiere.setPower(0);
 
-            if(gamepad2.dpad_down)
+            if(gamepad2.dpad_up)
                 robot.glisiere.setPower(-1);
+
+
 
             telemetry.addData("viteza coaie: ", speed);
             telemetry.addData("x", poseEstimate.getX());

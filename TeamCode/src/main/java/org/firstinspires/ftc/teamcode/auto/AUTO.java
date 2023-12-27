@@ -13,6 +13,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.drive.HMap;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.openftc.apriltag.AprilTagDetection;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
@@ -121,13 +122,14 @@ public class AUTO extends LinearOpMode {
 
             if (tagOfInterest.pose.x < -0.5 && !isStopRequested()) {
 
-                Trajectory traiect = drive.trajectoryBuilder(new Pose2d(13, -60, Math.toRadians(90)))
+                drive.setPoseEstimate(new Pose2d(13, -60, Math.toRadians(90)));
+                TrajectorySequence traiect = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
                         .splineTo(new Vector2d(7.5, -35.9), Math.toRadians(130))
                         .back(10)
                         .splineTo(new Vector2d(59, -11), Math.toRadians(0))
                                 .build();
 
-                drive.followTrajectory(traiect);
+                drive.followTrajectorySequence(traiect);
 
                 telemetry.addData("case 1", tagOfInterest.pose.x);
                 telemetry.update();
@@ -135,30 +137,43 @@ public class AUTO extends LinearOpMode {
 
             if (tagOfInterest.pose.x > -0.5 && tagOfInterest.pose.x < 0.5 && !isStopRequested()) {
 
-                Trajectory trajectory= drive.trajectoryBuilder( new Pose2d(13, -60, Math.toRadians(90)))
-                        .forward(32)
-                        .back(10)
+                drive.setPoseEstimate(new Pose2d(13, -60, Math.toRadians(90)));
+                TrajectorySequence trajectory= drive.trajectorySequenceBuilder( drive.getPoseEstimate())
+
+                        .lineTo(new Vector2d(13, -30))
+                        .lineTo(new Vector2d(13, -37.5))
                         .splineTo(new Vector2d(59, -11), Math.toRadians(0))
                         .build();
 
-                drive.followTrajectory(trajectory);
+                drive.followTrajectorySequence(trajectory);
                 telemetry.addData("case 2", tagOfInterest.pose.x);
                 telemetry.update();
             }
 
             if (tagOfInterest.pose.x > 0.5 && !isStopRequested()) {
 
-                Trajectory trjct = drive.trajectoryBuilder(new Pose2d(13, -60, Math.toRadians(90)))
+                drive.setPoseEstimate(new Pose2d(13, -60, Math.toRadians(90)));
+                TrajectorySequence trjct = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
                         .splineTo(new Vector2d(15.9, -35.9), Math.toRadians(40))
                         .back(7)
                         .lineToSplineHeading(new Pose2d(11, -11, Math.toRadians(180)))
                         .lineToSplineHeading(new Pose2d(59, -11, Math.toRadians(180)))
                         .build();
 
-                drive.followTrajectory(trjct);
+                drive.followTrajectorySequence(trjct);
                 telemetry.addData("case 3", tagOfInterest.pose.x);
                 telemetry.update();
             }
+        }
+        else {
+            drive.setPoseEstimate(new Pose2d(13, -60, Math.toRadians(90)));
+            TrajectorySequence traiect = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
+                    .splineTo(new Vector2d(7.5, -35.9), Math.toRadians(130))
+                    .back(10)
+                    .splineTo(new Vector2d(59, -11), Math.toRadians(0))
+                    .build();
+
+            drive.followTrajectorySequence(traiect);
         }
 
 
