@@ -21,8 +21,8 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 import java.util.ArrayList;
 
 
-@Autonomous(name = "Albastru Close")
-public class AUTO2 extends LinearOpMode {
+@Autonomous(name = "AUTO INSP")
+public class AUTO_INSP extends LinearOpMode {
     /*
     *  drive.trajectorySequenceBuilder(new Pose2d(13, -60, 0))
                                 .forward(50)
@@ -119,14 +119,14 @@ public class AUTO2 extends LinearOpMode {
 
         if(tagOfInterest != null) {
 
+
             if (tagOfInterest.pose.x < -0.5 && !isStopRequested()) {
 
-                Trajectory traiect = drive.trajectoryBuilder(new Pose2d(11, 60, Math.toRadians(-90)))
-                        .lineToSplineHeading(new Pose2d(15, 40, Math.toRadians(-45)))
-                        .back(5)
-                        .lineToSplineHeading(new Pose2d(11, 11, Math.toRadians(0)))
-                        .lineToSplineHeading(new Pose2d(59, 10, Math.toRadians(0)))
+                drive.setPoseEstimate(new Pose2d(13, -60, Math.toRadians(90)));
+                Trajectory traiect = drive.trajectoryBuilder(drive.getPoseEstimate())
+                        .forward(60)
                         .build();
+
                 drive.followTrajectory(traiect);
 
                 telemetry.addData("case 1", tagOfInterest.pose.x);
@@ -135,10 +135,10 @@ public class AUTO2 extends LinearOpMode {
 
             if (tagOfInterest.pose.x > -0.5 && tagOfInterest.pose.x < 0.5 && !isStopRequested()) {
 
-                Trajectory trajectory= drive.trajectoryBuilder(new Pose2d(11, 60, Math.toRadians(-90)))
-                        .lineTo(new Vector2d(11, 30))
-                        .back(5)
-                        .splineTo(new Vector2d(59, 10), Math.toRadians(0))
+                drive.setPoseEstimate(new Pose2d(13, -60, Math.toRadians(90)));
+                Trajectory trajectory= drive.trajectoryBuilder( drive.getPoseEstimate())
+
+                        .forward(60)
                         .build();
 
                 drive.followTrajectory(trajectory);
@@ -148,11 +148,9 @@ public class AUTO2 extends LinearOpMode {
 
             if (tagOfInterest.pose.x > 0.5 && !isStopRequested()) {
 
-                Trajectory trjct = drive.trajectoryBuilder(new Pose2d(11, 60, Math.toRadians(-90)))
-                        .lineToSplineHeading(new Pose2d(9, 35, Math.toRadians(220)))
-                        .back(7)
-                        .lineToSplineHeading(new Pose2d(11, 11, Math.toRadians(0)))
-                        .lineTo(new Vector2d(59, 10))
+                drive.setPoseEstimate(new Pose2d(13, -60, Math.toRadians(90)));
+                Trajectory trjct = drive.trajectoryBuilder(drive.getPoseEstimate())
+                        .forward(60)
                         .build();
 
                 drive.followTrajectory(trjct);
@@ -160,9 +158,14 @@ public class AUTO2 extends LinearOpMode {
                 telemetry.update();
             }
         }
-        else
-            telemetry.addData("muie", tagOfInterest.toString());
-        telemetry.update();
+        else {
+            drive.setPoseEstimate(new Pose2d(13, -60, Math.toRadians(90)));
+            Trajectory trjct = drive.trajectoryBuilder(drive.getPoseEstimate())
+                    .forward(50)
+                    .build();
+
+            drive.followTrajectory(trjct);
+        }
 
 
 

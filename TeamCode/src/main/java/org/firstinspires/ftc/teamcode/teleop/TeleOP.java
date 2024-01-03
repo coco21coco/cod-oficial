@@ -1,7 +1,11 @@
 package org.firstinspires.ftc.teamcode.teleop;
 
+import android.graphics.Camera;
+
+import com.acmerobotics.dashboard.DashboardCore;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -12,25 +16,36 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.drive.HMap;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
+import org.opencv.core.Mat;
 
 
 @TeleOp(name = "TeleOP", group = "TeleOP")
 @Config
 
 public class TeleOP extends LinearOpMode {
+
+
+
     //HMap robot = new HMap();
 
     @Override
     public void runOpMode() throws InterruptedException {
         //robot.init(hardwareMap);
-
         HMap robot = new HMap();
 
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
         FtcDashboard dashboard = FtcDashboard.getInstance();
+
         Telemetry dashtelemtry = dashboard.getTelemetry();
 
+        MultipleTelemetry Telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
+
+
+
         double speed = 100;
+
+        boolean toggle_unghi = false;
+        double unghi_curent = 0;
 
         drive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         robot.init(hardwareMap);
@@ -42,14 +57,26 @@ public class TeleOP extends LinearOpMode {
 
             drive.setWeightedDrivePower(
                     new Pose2d(
-                            gamepad1.left_stick_y * speed / 100,
-                            gamepad1.left_stick_x * speed / 100,
+                            -gamepad1.left_stick_y * speed / 100,
+                            -gamepad1.left_stick_x * speed / 100,
                             -gamepad1.right_stick_x * speed / 100
                     )
             );
 
             drive.update();
             Pose2d poseEstimate = drive.getPoseEstimate();
+
+
+            if(gamepad1.right_bumper) {
+                toggle_unghi = true;
+                unghi_curent = drive.getExternalHeading();
+            }
+
+            if(gamepad1.left_bumper)
+                toggle_unghi = false;
+
+            if(toggle_unghi)
+               // maintain_angle(unghi_curent, 0.1);
 
 
             if(gamepad1.a)
@@ -71,7 +98,7 @@ public class TeleOP extends LinearOpMode {
 
             if(gamepad2.left_stick_button) {
                 robot.cutie.setPosition(robot.cutie_deskis);
-                sleep(800);
+                sleep(300);
                 robot.cutie.setPosition(robot.cutie_inkis);
             }
 
@@ -81,21 +108,37 @@ public class TeleOP extends LinearOpMode {
                 robot.avion.setPosition(robot.avion_armat);
             }
             // glisiere
-            if(gamepad2.dpad_down)
+            if(gamepad2.dpad_up)
                 robot.glisiere.setPower(1);
             else
                 robot.glisiere.setPower(0);
 
-            if(gamepad2.dpad_up)
+            if(gamepad2.dpad_down)
                 robot.glisiere.setPower(-1);
 
-
-
-            telemetry.addData("viteza coaie: ", speed);
-            telemetry.addData("x", poseEstimate.getX());
-            telemetry.addData("y", poseEstimate.getY());
-            telemetry.addData("heading", poseEstimate.getHeading());
-            telemetry.update();
+            Telemetry.addData("viteza coaie: ", speed);
+            Telemetry.addData("x", poseEstimate.getX());
+            Telemetry.addData("y", poseEstimate.getY());
+            Telemetry.addData("heading", poseEstimate.getHeading());
+            Telemetry.update();
         }
+
+
+
     }
-}
+
+    /*public void maintain_angle(double angl, double speed1){
+        double unghi = drive.getExternalHeading();
+
+        if(unghi - angl > Math.toRadians(3))
+            drive.setMotorPowers(-speed1, -speed1,   speed1, speed1);
+
+        else
+        if(unghi - angl < -Math.toRadians(3))
+            drive.setMotorPowers(speed1, speed1, -speed1, -speed1);
+
+    }*/
+    }
+
+
+

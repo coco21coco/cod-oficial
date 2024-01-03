@@ -10,21 +10,21 @@ import com.acmerobotics.dashboard.config.Config;
 public class HMap {
 
 
-    public BNO055IMU imu = null;
+
     public DcMotorEx colectare = null,
                      glisiere = null;
 
     public Servo cutie = null,
                 avion = null;
 
-    public static double cutie_inkis = 0.25,
-                    cutie_deskis = 0,
+    public static double cutie_inkis = 0.7,
+                    cutie_deskis = 0.5,
 
-                    avion_armat = 0.6,
-                    avion_tras = 0.8;
+                    avion_armat = 59,
+                    avion_tras = 0.7;
    public void init(HardwareMap hmap){
 
-       imu = hmap.get(BNO055IMU.class, "imu");
+       
 
       colectare = hmap.get(DcMotorEx.class, "colectare");
       glisiere = hmap.get(DcMotorEx.class, "glisiere");
