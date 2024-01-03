@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.drive;
 
+import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -9,7 +10,7 @@ import com.acmerobotics.dashboard.config.Config;
 public class HMap {
 
 
-
+    public BNO055IMU imu = null;
     public DcMotorEx colectare = null,
                      glisiere = null;
 
@@ -23,6 +24,8 @@ public class HMap {
                     avion_tras = 0.8;
    public void init(HardwareMap hmap){
 
+       imu = hmap.get(BNO055IMU.class, "imu");
+
       colectare = hmap.get(DcMotorEx.class, "colectare");
       glisiere = hmap.get(DcMotorEx.class, "glisiere");
 
@@ -34,4 +37,6 @@ public class HMap {
       avion.setPosition(avion_armat);
       cutie.setPosition(cutie_inkis);
    }
+
+
 }
