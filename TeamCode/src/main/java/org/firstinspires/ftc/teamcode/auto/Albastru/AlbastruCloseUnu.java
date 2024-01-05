@@ -45,7 +45,7 @@ public class AlbastruCloseUnu extends LinearOpMode {
 
         waitForStart();
 
-
+        drive.setPoseEstimate(new Pose2d(11, 60, Math.toRadians(-90)));
         TrajectorySequence traiect = drive.trajectorySequenceBuilder(new Pose2d(11, 60, Math.toRadians(-90)))
                 .lineToSplineHeading(new Pose2d(15, 40, Math.toRadians(-45)))
                 .back(5)

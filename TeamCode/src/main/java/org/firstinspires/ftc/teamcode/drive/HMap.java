@@ -20,7 +20,7 @@ public class HMap {
     public static double cutie_inkis = 0.7,
                     cutie_deskis = 0.5,
 
-                    avion_armat = 59,
+                    avion_armat = 0.54,
                     avion_tras = 0.7;
    public void init(HardwareMap hmap){
 

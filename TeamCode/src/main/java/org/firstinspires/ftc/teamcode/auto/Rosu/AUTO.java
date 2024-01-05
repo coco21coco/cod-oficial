@@ -47,6 +47,7 @@ public class AUTO extends LinearOpMode {
 
         waitForStart();
 
+        drive.setPoseEstimate(new Pose2d(13, -60, Math.toRadians(90)));
 
         TrajectorySequence traiect = drive.trajectorySequenceBuilder(new Pose2d(13, -60, Math.toRadians(90)))
                 .splineTo(new Vector2d(7.5, -35.9), Math.toRadians(130))

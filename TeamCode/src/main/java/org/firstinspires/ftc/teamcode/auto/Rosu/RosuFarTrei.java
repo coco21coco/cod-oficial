@@ -44,6 +44,7 @@ public class RosuFarTrei extends LinearOpMode {
 
         waitForStart();
 
+        drive.setPoseEstimate(new Pose2d(-35, -60, Math.toRadians(90)));
 
         TrajectorySequence traiect = drive.trajectorySequenceBuilder( new Pose2d(-35, -60, Math.toRadians(90)))
                 .splineTo(new Vector2d(-40, -35), Math.toRadians(130))

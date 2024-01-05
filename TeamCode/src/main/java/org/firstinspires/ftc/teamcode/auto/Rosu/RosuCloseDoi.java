@@ -45,10 +45,11 @@ public class RosuCloseDoi extends LinearOpMode {
         waitForStart();
 
 
+        drive.setPoseEstimate(new Pose2d(13, -60, Math.toRadians(90)));
         TrajectorySequence traiect = drive.trajectorySequenceBuilder(new Pose2d(13, -60, Math.toRadians(90)))
-                .forward(32)
-                .back(10)
-                .splineTo(new Vector2d(59, -11), Math.toRadians(0))
+                .forward(20)
+                .back(5)
+                .splineTo(new Vector2d(64, 5), Math.toRadians(0))
                 .build();
 
         drive.followTrajectorySequence(traiect);

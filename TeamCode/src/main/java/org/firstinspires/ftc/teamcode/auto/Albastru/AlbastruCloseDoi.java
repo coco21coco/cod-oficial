@@ -25,14 +25,15 @@ import java.util.ArrayList;
 @Autonomous(name = "Albastru Close Case 2")
 public class AlbastruCloseDoi extends LinearOpMode {
 
-    SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
-    HMap robot = new HMap();
+
 
 
 
     @Override
     public void runOpMode() {
 
+        SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
+        HMap robot = new HMap();
 
         robot.init(hardwareMap);
 
@@ -45,10 +46,11 @@ public class AlbastruCloseDoi extends LinearOpMode {
         waitForStart();
 
 
+        drive.setPoseEstimate(new Pose2d(11, 60, Math.toRadians(-90)));
         TrajectorySequence traiect = drive.trajectorySequenceBuilder( new Pose2d(11, 60, Math.toRadians(-90)))
-                .lineTo(new Vector2d(11, 30))
+                .lineTo(new Vector2d(11, 34))
                 .back(5)
-                .splineTo(new Vector2d(59, 10), Math.toRadians(0))
+                .splineTo(new Vector2d(70, 10), Math.toRadians(0))
                 .build();
 
         drive.followTrajectorySequence(traiect);
