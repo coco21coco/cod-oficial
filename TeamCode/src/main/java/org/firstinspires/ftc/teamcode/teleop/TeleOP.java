@@ -14,9 +14,14 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.drive.HMap;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.opencv.core.Mat;
+import org.openftc.easyopencv.OpenCvCamera;
+import org.openftc.easyopencv.OpenCvCameraFactory;
+import org.openftc.easyopencv.OpenCvCameraRotation;
+import org.openftc.easyopencv.OpenCvWebcam;
 
 
 @TeleOp(name = "TeleOP", group = "TeleOP")
@@ -40,6 +45,26 @@ public class TeleOP extends LinearOpMode {
         Telemetry dashtelemtry = dashboard.getTelemetry();
 
         MultipleTelemetry Telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
+
+        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        OpenCvWebcam camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
+        camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener()
+        {
+            @Override
+            public void onOpened()
+            {
+                camera.startStreaming(800,448, OpenCvCameraRotation.UPRIGHT);
+            }
+
+            @Override
+            public void onError(int errorCode)
+            {
+
+            }
+        });
+        FtcDashboard.getInstance().startCameraStream(camera, 30);
+
+
 
 
         double speed = 100;
@@ -78,15 +103,21 @@ public class TeleOP extends LinearOpMode {
                 );
 
 
-                if (gamepad1.a)
-                    speed = 50;
-            if (gamepad1.b)
+            if (gamepad1.left_bumper) {
+                speed = 50;
+                gamepad1.rumbleBlips(1);
+            }
+            if (gamepad1.right_bumper) {
                 speed = 85;
+                gamepad1.rumbleBlips(1);
+            }
 
             // colectare
 
-            if (gamepad2.b)
+            if (gamepad2.b) {
                 robot.colectare.setPower(1);
+                gamepad2.rumbleBlips(1);
+            }
             else
                 robot.colectare.setPower(0);
 
@@ -96,6 +127,7 @@ public class TeleOP extends LinearOpMode {
             // cutie
 
             if (gamepad2.left_stick_button) {
+                gamepad2.rumble(300);
                 robot.cutie.setPosition(robot.cutie_deskis);
                 sleep(300);
                 robot.cutie.setPosition(robot.cutie_inkis);

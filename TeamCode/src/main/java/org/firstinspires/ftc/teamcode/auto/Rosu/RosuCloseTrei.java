@@ -7,6 +7,7 @@ import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.acmerobotics.roadrunner.trajectory.TrajectoryBuilder;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -21,8 +22,8 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.ArrayList;
 
-
-@Autonomous(name = "Rosu Close Case 3")
+@Disabled
+@Autonomous(name = "RC3")
 public class RosuCloseTrei extends LinearOpMode {
 
 
@@ -48,11 +49,11 @@ public class RosuCloseTrei extends LinearOpMode {
 
         drive.setPoseEstimate(new Pose2d(13, -60, Math.toRadians(90)));
 
-        TrajectorySequence traiect = drive.trajectorySequenceBuilder( new Pose2d(-35, -60, Math.toRadians(90)))
-                .splineTo(new Vector2d(-30, -38), Math.toRadians(65))
-                .back(5)
-                .lineToSplineHeading(new Pose2d(-38, -11, Math.toRadians(0)))
-                .lineTo(new Vector2d(69, -11))
+        TrajectorySequence traiect = drive.trajectorySequenceBuilder( new Pose2d(13, -60, Math.toRadians(90)))
+                .splineTo(new Vector2d(15.9, -35.9), Math.toRadians(40))
+                .back(7)
+                .lineToSplineHeading(new Pose2d(11, -11, Math.toRadians(180)))
+                .lineToSplineHeading(new Pose2d(59, -11, Math.toRadians(180)))
                 .build();
 
         drive.followTrajectorySequence(traiect);

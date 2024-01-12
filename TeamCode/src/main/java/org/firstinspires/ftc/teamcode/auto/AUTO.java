@@ -7,9 +7,11 @@ import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.acmerobotics.roadrunner.trajectory.TrajectoryBuilder;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.checkerframework.framework.qual.DefaultInUncheckedCodeFor;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.drive.HMap;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
@@ -21,8 +23,8 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.ArrayList;
 
-
-@Autonomous(name = "Rosu Close")
+@Disabled
+@Autonomous(name = "PLA")
 public class AUTO extends LinearOpMode {
     /*
     *  drive.trajectorySequenceBuilder(new Pose2d(13, -60, 0))

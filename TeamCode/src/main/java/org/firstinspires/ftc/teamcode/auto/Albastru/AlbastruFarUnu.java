@@ -44,7 +44,7 @@ public class AlbastruFarUnu extends LinearOpMode {
         waitForStart();
 
 
-        drive.setPoseEstimate( new Pose2d(11, 60, Math.toRadians(-90)));
+        drive.setPoseEstimate( new Pose2d(-35, 60, Math.toRadians(-90)));
         TrajectorySequence traiect = drive.trajectorySequenceBuilder( new Pose2d(11, 60, Math.toRadians(-90)))
                 .lineToSplineHeading(new Pose2d(-35, 60, Math.toRadians(-90)))
                 .lineToSplineHeading(new Pose2d(-31, 35, Math.toRadians(-45)))
