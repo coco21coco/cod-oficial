@@ -87,12 +87,14 @@ public class RosuFar extends LinearOpMode {
                 if (TSE.getLeft() < 200) {
                     drive.setPoseEstimate(new Pose2d(-35, -60, Math.toRadians(90)));
 
-                    TrajectorySequence traiect = drive.trajectorySequenceBuilder( new Pose2d(-35, -60, Math.toRadians(90)))
+                    TrajectorySequence traiect = drive.trajectorySequenceBuilder(new Pose2d(-35, -60, Math.toRadians(90)))
                             .splineTo(new Vector2d(-40, -35), Math.toRadians(130))
                             .back(5)
                             .turn(1)
-                            .lineTo(new Vector2d(-36.6, -9))
-                            .lineTo(new Vector2d(65, -11))
+                            .lineToSplineHeading(new Pose2d(46, -35, Math.toRadians(180)))
+                            .back(1)
+                            .strafeRight(18)
+                            .back(10)
                             .build();
 
                     drive.followTrajectorySequence(traiect);
@@ -106,11 +108,12 @@ public class RosuFar extends LinearOpMode {
                     drive.setPoseEstimate(new Pose2d(-35, -60, Math.toRadians(90)));
 
                     TrajectorySequence traiect = drive.trajectorySequenceBuilder( new Pose2d(-35, -60, Math.toRadians(90)))
-                            .splineTo(new Vector2d(-35, -35), Math.toRadians(90))
-                            .back(5)
-                            .lineTo(new Vector2d(-52, -32))
-                            .lineToSplineHeading(new Pose2d(-38, -9, Math.toRadians(0)))
-                            .lineTo(new Vector2d(65, -11))
+                            .forward(17.5)
+                            .back(0.1)
+                            .lineToSplineHeading(new Pose2d(46, -35, Math.toRadians(180)))
+                            .back(1)
+                            .strafeRight(18)
+                            .back(10)
                             .build();
 
                     drive.followTrajectorySequence(traiect);
@@ -123,12 +126,14 @@ public class RosuFar extends LinearOpMode {
 
                 drive.setPoseEstimate(new Pose2d(-35, -60, Math.toRadians(90)));
 
-                TrajectorySequence traiect = drive.trajectorySequenceBuilder( new Pose2d(-35, -60, Math.toRadians(90)))
-                        .splineTo(new Vector2d(-40, -35), Math.toRadians(130))
+                TrajectorySequence traiect = drive.trajectorySequenceBuilder(new Pose2d(-35, -60, Math.toRadians(90)))
+                        .splineTo(new Vector2d(-30, -38), Math.toRadians(65))
                         .back(5)
-                        .turn(1)
-                        .lineTo(new Vector2d(-36.6, -9))
-                        .lineTo(new Vector2d(65, -11))
+                        .turn(-0.5)
+                        .lineToSplineHeading(new Pose2d(46, -35, Math.toRadians(180)))
+                        .back(1)
+                        .strafeRight(18)
+                        .back(10)
                         .build();
 
                 drive.followTrajectorySequence(traiect);

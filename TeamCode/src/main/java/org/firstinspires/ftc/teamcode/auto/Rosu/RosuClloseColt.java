@@ -4,10 +4,8 @@ import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
-import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -24,8 +22,8 @@ import org.openftc.easyopencv.OpenCvWebcam;
 
 import java.util.List;
 
-@Autonomous(name = "Rosu Close Mjl")
-public class RosuClose extends LinearOpMode {
+@Autonomous(name = "Rosu Close Colt")
+public class RosuClloseColt extends LinearOpMode {
     private static final boolean USE_WEBCAM = true;  // true for webcam, false for phone camera
     private static final String TFOD_MODEL_FILE = "/sdcard/FIRST/tflitemodels/RED_TSE.tflite";
     private static final String[] LABELS = {
@@ -35,12 +33,6 @@ public class RosuClose extends LinearOpMode {
     private TfodProcessor tfod;
 
     private VisionPortal visionPortal;
-
-
-    public  static int INATLTIME_GLIS = 100;
-    HMap robot = new HMap();
-
-
 
     @Override
     public void runOpMode() {
@@ -65,15 +57,15 @@ public class RosuClose extends LinearOpMode {
             for (Recognition TSE : currentRecognition) {
 
 
-                    if (TSE.getLeft() < 200) {
-                        telemetry.addData("caz 1", TSE.getLeft());
-                        telemetry.update();
-                    }
+                if (TSE.getLeft() < 200) {
+                    telemetry.addData("caz 1", TSE.getLeft());
+                    telemetry.update();
+                }
 
-                    if (TSE.getLeft() >= 200) {
-                        telemetry.addData("caz 2", TSE.getLeft());
-                        telemetry.update();
-                    }
+                if (TSE.getLeft() >= 200) {
+                    telemetry.addData("caz 2", TSE.getLeft());
+                    telemetry.update();
+                }
 
             }
 
@@ -96,12 +88,12 @@ public class RosuClose extends LinearOpMode {
                 if (TSE.getLeft() < 200) {
                     drive.setPoseEstimate(new Pose2d(13, -60, Math.toRadians(90)));
 
-                    TrajectorySequence traiect = drive.trajectorySequenceBuilder( new Pose2d(13, -60, Math.toRadians(90)))
+                    TrajectorySequence traiect = drive.trajectorySequenceBuilder(new Pose2d(13, -60, Math.toRadians(90)))
                             .splineTo(new Vector2d(7.5, -35.9), Math.toRadians(130))
                             .back(0.1)
                             .lineToSplineHeading(new Pose2d(46, -35, Math.toRadians(180)))
                             .back(1)
-                            .strafeRight(18)
+                            .strafeLeft(18)
                             .back(10)
                             .build();
 
@@ -114,28 +106,18 @@ public class RosuClose extends LinearOpMode {
                 //caz 2
                 if (TSE.getLeft() >= 200) {
 
-                    //se incearca a se pune in auto
-
                     drive.setPoseEstimate(new Pose2d(13, -60, Math.toRadians(90)));
 
                     TrajectorySequence traiect = drive.trajectorySequenceBuilder( new Pose2d(13, -60, Math.toRadians(90)))
                             .forward(17.5)
-                            .back(3)
-                            .build();
-
-                    drive.followTrajectorySequence(traiect);
-
-                    TrajectorySequence panou = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
-                            .lineToSplineHeading(new Pose2d(46, -40, Math.toRadians(180)))
+                            .back(0.1)
+                            .lineToSplineHeading(new Pose2d(46, -35, Math.toRadians(180)))
                             .back(1)
-                            .waitSeconds(2)
-                            .addTemporalMarker(-0.5, () -> urca())
-                            .addTemporalMarker(1, () -> coboara())
-                            .strafeRight(18)
+                            .strafeLeft(18)
                             .back(10)
                             .build();
 
-                    drive.followTrajectorySequence(panou);
+                    drive.followTrajectorySequence(traiect);
                 }
 
             }
@@ -145,12 +127,12 @@ public class RosuClose extends LinearOpMode {
 
                 drive.setPoseEstimate(new Pose2d(13, -60, Math.toRadians(90)));
 
-                TrajectorySequence traiect = drive.trajectorySequenceBuilder( new Pose2d(13, -60, Math.toRadians(90)))
+                TrajectorySequence traiect = drive.trajectorySequenceBuilder(new Pose2d(13, -60, Math.toRadians(90)))
                         .splineTo(new Vector2d(15.9, -35.9), Math.toRadians(40))
                         .back(0.1)
                         .lineToSplineHeading(new Pose2d(46, -35, Math.toRadians(180)))
                         .back(1)
-                        .strafeRight(18)
+                        .strafeLeft(18)
                         .back(10)
                         .build();
 
@@ -209,21 +191,4 @@ public class RosuClose extends LinearOpMode {
 
     }   // end method telemetryTfod()
 
-   public void urca(){
-
-        robot.glisiere.setTargetPosition(INATLTIME_GLIS);
-        robot.glisiere.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        robot.cutie.setPosition(robot.cutie_deskis);
-   }
-
-   public void coboara(){
-
-        robot.cutie.setPosition(robot.cutie_inkis);
-
-
-        robot.glisiere.setTargetPosition(0);
-        robot.glisiere.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-   }
 }
