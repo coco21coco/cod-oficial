@@ -3,8 +3,6 @@ package org.firstinspires.ftc.teamcode.auto.Rosu;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.acmerobotics.roadrunner.geometry.Vector2d;
-import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -17,10 +15,6 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.tfod.TfodProcessor;
-import org.openftc.easyopencv.OpenCvCamera;
-import org.openftc.easyopencv.OpenCvCameraFactory;
-import org.openftc.easyopencv.OpenCvCameraRotation;
-import org.openftc.easyopencv.OpenCvWebcam;
 
 import java.util.List;
 
@@ -97,7 +91,7 @@ public class RosuClose extends LinearOpMode {
                     drive.setPoseEstimate(new Pose2d(13, -60, Math.toRadians(90)));
 
                     TrajectorySequence traiect = drive.trajectorySequenceBuilder( new Pose2d(13, -60, Math.toRadians(90)))
-                            .splineTo(new Vector2d(7.5, -35.9), Math.toRadians(130))
+                            .lineToSplineHeading(new Pose2d(10, -35.9, Math.toRadians(130)))
                             .back(0.1)
                             .lineToSplineHeading(new Pose2d(46, -35, Math.toRadians(180)))
                             .back(1)
@@ -146,8 +140,8 @@ public class RosuClose extends LinearOpMode {
                 drive.setPoseEstimate(new Pose2d(13, -60, Math.toRadians(90)));
 
                 TrajectorySequence traiect = drive.trajectorySequenceBuilder( new Pose2d(13, -60, Math.toRadians(90)))
-                        .splineTo(new Vector2d(15.9, -35.9), Math.toRadians(40))
-                        .back(0.1)
+                        .lineToSplineHeading(new Pose2d(17, -35.9, Math.toRadians(40)))
+                        .back(4)
                         .lineToSplineHeading(new Pose2d(46, -35, Math.toRadians(180)))
                         .back(1)
                         .strafeRight(18)
@@ -211,8 +205,8 @@ public class RosuClose extends LinearOpMode {
 
    public void urca(){
 
-        robot.glisiere.setTargetPosition(INATLTIME_GLIS);
-        robot.glisiere.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.glisiere_dr.setTargetPosition(INATLTIME_GLIS);
+        robot.glisiere_dr.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         robot.cutie.setPosition(robot.cutie_deskis);
    }
@@ -222,8 +216,8 @@ public class RosuClose extends LinearOpMode {
         robot.cutie.setPosition(robot.cutie_inkis);
 
 
-        robot.glisiere.setTargetPosition(0);
-        robot.glisiere.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.glisiere_dr.setTargetPosition(0);
+        robot.glisiere_dr.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
    }
 }

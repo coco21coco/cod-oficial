@@ -89,7 +89,7 @@ public class RosuClloseColt extends LinearOpMode {
                     drive.setPoseEstimate(new Pose2d(13, -60, Math.toRadians(90)));
 
                     TrajectorySequence traiect = drive.trajectorySequenceBuilder(new Pose2d(13, -60, Math.toRadians(90)))
-                            .splineTo(new Vector2d(7.5, -35.9), Math.toRadians(130))
+                            .lineToSplineHeading(new Pose2d(10, -35.9, Math.toRadians(130)))
                             .back(0.1)
                             .lineToSplineHeading(new Pose2d(46, -35, Math.toRadians(180)))
                             .back(1)
@@ -128,8 +128,8 @@ public class RosuClloseColt extends LinearOpMode {
                 drive.setPoseEstimate(new Pose2d(13, -60, Math.toRadians(90)));
 
                 TrajectorySequence traiect = drive.trajectorySequenceBuilder(new Pose2d(13, -60, Math.toRadians(90)))
-                        .splineTo(new Vector2d(15.9, -35.9), Math.toRadians(40))
-                        .back(0.1)
+                        .lineToSplineHeading(new Pose2d(17, -35.9, Math.toRadians(40)))
+                        .back(4)
                         .lineToSplineHeading(new Pose2d(46, -35, Math.toRadians(180)))
                         .back(1)
                         .strafeLeft(18)

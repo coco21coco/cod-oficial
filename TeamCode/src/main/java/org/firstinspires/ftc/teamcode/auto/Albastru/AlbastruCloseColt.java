@@ -86,7 +86,7 @@ public class AlbastruCloseColt extends LinearOpMode {
 
                 //caz 1
                 if (TSE.getLeft() < 200) {
-                    drive.setPoseEstimate(new Pose2d(13, -60, Math.toRadians(90)));
+                    drive.setPoseEstimate(new Pose2d(11, 60, Math.toRadians(-90)));
 
                     TrajectorySequence traiect = drive.trajectorySequenceBuilder( new Pose2d(11, 60, Math.toRadians(-90)))
                             .lineToSplineHeading(new Pose2d(15, 40, Math.toRadians(-45)))
