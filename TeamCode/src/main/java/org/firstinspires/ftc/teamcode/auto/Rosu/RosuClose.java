@@ -208,12 +208,12 @@ public class RosuClose extends LinearOpMode {
         robot.glisiere_dr.setTargetPosition(INATLTIME_GLIS);
         robot.glisiere_dr.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        robot.cutie.setPosition(robot.cutie_deskis);
+
    }
 
    public void coboara(){
 
-        robot.cutie.setPosition(robot.cutie_inkis);
+
 
 
         robot.glisiere_dr.setTargetPosition(0);

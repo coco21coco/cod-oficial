@@ -15,7 +15,8 @@ public class HMap {
                      glisiere_dr = null,
                      glisiere_st = null;
 
-    public Servo cutie = null,
+    public Servo cutie_dr = null,
+                cutie_st = null,
                 avion = null;
 
     public static double cutie_inkis = 0.7,
@@ -43,11 +44,13 @@ public class HMap {
       glisiere_st.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
 
-      cutie = hmap.get(Servo.class, "cutie");
-      avion = hmap.get(Servo.class, "avion");
+      cutie_dr = hmap.get(Servo.class, "cutie_dr");
+      cutie_st = hmap.get(Servo.class, "cutie_st");
 
-      avion.setPosition(avion_armat);
-      cutie.setPosition(cutie_inkis);
+
+      cutie_st.setPosition(0);
+
+      cutie_dr.setPosition(1);
    }
 
 

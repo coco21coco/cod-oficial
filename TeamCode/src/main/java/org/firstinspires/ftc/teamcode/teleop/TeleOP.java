@@ -73,6 +73,7 @@ public class TeleOP extends LinearOpMode {
 
         double glisPos = 0;
 
+        boolean glis_toggle = false; // automat
 
         boolean toggle_unghi = false;
         double unghi_curent = 0;
@@ -120,22 +121,25 @@ public class TeleOP extends LinearOpMode {
             // colectare
 
             if (gamepad2.b) {
-                robot.colectare.setPower(0.5);
+                robot.colectare.setPower(1);
                 gamepad2.rumbleBlips(1);
             }
             else
                 robot.colectare.setPower(0);
 
             if (gamepad2.a)
-                robot.colectare.setPower(-0.5);
+                robot.colectare.setPower(-1);
 
             // cutie
 
-            if (gamepad2.left_stick_button) {
-                gamepad2.rumble(300);
-                robot.cutie.setPosition(robot.cutie_deskis);
-                sleep(300);
-                robot.cutie.setPosition(robot.cutie_inkis);
+            if(gamepad2.dpad_right){
+                robot.cutie_st.setPosition(0);
+                robot.cutie_dr.setPosition(1);
+            }
+
+            if(gamepad2.dpad_left){
+                robot.cutie_st.setPosition(0.15);
+                robot.cutie_dr.setPosition(0.7);
             }
 
             if (gamepad2.y) {
@@ -145,6 +149,13 @@ public class TeleOP extends LinearOpMode {
             }
             // glisiere
             glisPos = robot.glisiere_dr.getCurrentPosition();
+
+            if(gamepad2.right_stick_button)
+                glis_toggle = false;
+
+            if(gamepad2.left_stick_button)
+                glis_toggle = true;
+
 
             if(gamepad2.right_bumper)
                 pidGlis.setTargetPosition(poz_sus);
@@ -158,9 +169,14 @@ public class TeleOP extends LinearOpMode {
                 robot.glisiere_dr.setPower(1);
                 robot.glisiere_st.setPower(1);
             }
-            else {
+            else if(glis_toggle){
                 robot.glisiere_dr.setPower(glisPwr);
                 robot.glisiere_st.setPower(glisPwr);
+            }
+
+            else {
+                robot.glisiere_dr.setPower(0);
+                robot.glisiere_st.setPower(0);
             }
 
             if(gamepad2.dpad_down){
@@ -173,6 +189,7 @@ public class TeleOP extends LinearOpMode {
             Telemetry.addData("GLIS ST", robot.glisiere_st.getCurrentPosition());
             Telemetry.addData("GLIS DR", robot.glisiere_dr.getCurrentPosition());
             Telemetry.addData("target poz", poz_sus);
+            Telemetry.addData("GLIS AUTOMAT: ", glis_toggle);
             Telemetry.update();
         }
 
