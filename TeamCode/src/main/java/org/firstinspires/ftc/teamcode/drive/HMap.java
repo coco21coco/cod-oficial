@@ -23,7 +23,11 @@ public class HMap {
                     cutie_deskis = 0.5,
 
                     avion_armat = 0.54,
-                    avion_tras = 0.7;
+                    avion_tras = 0.7,
+                    cutie_dr_extins = 0.7,
+                    cutie_st_extins = 0.3,
+                    cutie_dr_strans = 1,
+                    cutie_st_strans  = 0;
    public void init(HardwareMap hmap){
 
        
@@ -44,14 +48,28 @@ public class HMap {
       glisiere_st.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
 
-      cutie_dr = hmap.get(Servo.class, "cutie_dr");
-      cutie_st = hmap.get(Servo.class, "cutie_st");
+       cutie_dr = hmap.get(Servo.class, "cutie_dr");
+       cutie_st = hmap.get(Servo.class, "cutie_st");
 
 
-      cutie_st.setPosition(0);
-
-      cutie_dr.setPosition(1);
    }
 
+   public void extinde_cutie(){
+       cutie_dr.setPosition(cutie_dr_extins);
+       cutie_st.setPosition(cutie_st_extins);
+   }
+
+    public void strange_cutie(){
+        cutie_dr.setPosition(cutie_dr_strans);
+        cutie_st.setPosition(cutie_st_strans);
+    }
+
+    public void trage_avion(){
+       avion.setPosition(avion_tras);
+    }
+
+    public void armeaza_avion(){
+       avion.setPosition(avion_armat);
+    }
 
 }

@@ -78,6 +78,7 @@ public class TeleOP extends LinearOpMode {
         boolean toggle_unghi = false;
         double unghi_curent = 0;
 
+        boolean urca = false;
         drive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         robot.init(hardwareMap);
 
@@ -133,19 +134,19 @@ public class TeleOP extends LinearOpMode {
             // cutie
 
             if(gamepad2.dpad_right){
-                robot.cutie_st.setPosition(0);
-                robot.cutie_dr.setPosition(1);
+                //robot.cutie_st.setPosition(0);
+                //robot.cutie_dr.setPosition(1);
             }
 
             if(gamepad2.dpad_left){
-                robot.cutie_st.setPosition(0.15);
-                robot.cutie_dr.setPosition(0.7);
+                //robot.cutie_st.setPosition(0.15);
+                //robot.cutie_dr.setPosition(0.7);
             }
 
             if (gamepad2.y) {
-                robot.avion.setPosition(robot.avion_tras);
+                robot.trage_avion();
                 sleep(200);
-                robot.avion.setPosition(robot.avion_armat);
+                robot.armeaza_avion();
             }
             // glisiere
             glisPos = robot.glisiere_dr.getCurrentPosition();
@@ -157,21 +158,28 @@ public class TeleOP extends LinearOpMode {
                 glis_toggle = true;
 
 
-            if(gamepad2.right_bumper)
+            if(gamepad2.right_bumper) {
                 pidGlis.setTargetPosition(poz_sus);
+                urca = true;
+            }
 
-            if(gamepad2.left_bumper)
+            if(gamepad2.left_bumper) {
                 pidGlis.setTargetPosition(0);
+                urca = false;
+            }
 
             glisPwr = pidGlis.update(glisPos);
 
             if(gamepad2.dpad_up){
                 robot.glisiere_dr.setPower(1);
                 robot.glisiere_st.setPower(1);
+
+                urca = true;
             }
             else if(glis_toggle){
                 robot.glisiere_dr.setPower(glisPwr);
                 robot.glisiere_st.setPower(glisPwr);
+
             }
 
             else {
@@ -182,7 +190,15 @@ public class TeleOP extends LinearOpMode {
             if(gamepad2.dpad_down){
                 robot.glisiere_dr.setPower(-1);
                 robot.glisiere_st.setPower(-1);
+
+                urca = false;
             }
+
+            if(glisPos == 800 || urca == true)
+                robot.extinde_cutie();
+
+            if(glisPos == 800 || urca == false)
+                robot.strange_cutie();
 
             Telemetry.addData("viteza coaie: ", speed);
             Telemetry.addData("heading", Math.toDegrees(drive.getExternalHeading()));
