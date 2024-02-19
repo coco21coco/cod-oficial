@@ -17,17 +17,18 @@ public class HMap {
 
     public Servo cutie_dr = null,
                 cutie_st = null,
-                avion = null;
+                avion = null,
+                cutie = null;
 
     public static double cutie_inkis = 0.7,
-                    cutie_deskis = 0.5,
+                    cutie_deskis = 0.3,
 
                     avion_armat = 0.54,
                     avion_tras = 0.7,
                     cutie_dr_extins = 0.7,
                     cutie_st_extins = 0.3,
-                    cutie_dr_strans = 1,
-                    cutie_st_strans  = 0;
+                    cutie_dr_strans = 0.95,
+                    cutie_st_strans  = 0.05;
    public void init(HardwareMap hmap){
 
        
@@ -51,6 +52,10 @@ public class HMap {
        cutie_dr = hmap.get(Servo.class, "cutie_dr");
        cutie_st = hmap.get(Servo.class, "cutie_st");
 
+       cutie = hmap.get(Servo.class, "cutie");
+       strange_cutie();
+       deschide_cutie();
+
 
    }
 
@@ -62,6 +67,16 @@ public class HMap {
     public void strange_cutie(){
         cutie_dr.setPosition(cutie_dr_strans);
         cutie_st.setPosition(cutie_st_strans);
+    }
+
+    public void deschide_cutie()
+    {
+        cutie.setPosition(cutie_deskis);
+    }
+
+    public void inchide_cutie()
+    {
+        cutie.setPosition(cutie_inkis);
     }
 
     public void trage_avion(){

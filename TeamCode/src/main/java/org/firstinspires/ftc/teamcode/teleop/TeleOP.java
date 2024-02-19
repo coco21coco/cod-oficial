@@ -194,11 +194,19 @@ public class TeleOP extends LinearOpMode {
                 urca = false;
             }
 
-            if(glisPos == 800 || urca == true)
+            if(glisPos >= 600 && urca == true)
                 robot.extinde_cutie();
 
-            if(glisPos == 800 || urca == false)
+            if(urca == false)
                 robot.strange_cutie();
+
+            if(gamepad1.y)
+                robot.deschide_cutie();
+
+            if(gamepad1.x)
+                robot.inchide_cutie();
+
+
 
             Telemetry.addData("viteza coaie: ", speed);
             Telemetry.addData("heading", Math.toDegrees(drive.getExternalHeading()));
@@ -214,54 +222,6 @@ public class TeleOP extends LinearOpMode {
     }
 
 
-    public void maintain_angle(double angl, double speed1, SampleMecanumDrive d){
-        double unghi = d.getExternalHeading();
-
-        if(Math.toDegrees(unghi) - Math.toDegrees(angl) > Math.toRadians(3))
-            d.setMotorPowers(speed1, speed1,   -speed1, -speed1);
-
-        else
-        if(Math.toDegrees(unghi) - Math.toDegrees(angl) < -Math.toRadians(3))
-            d.setMotorPowers(-speed1, -speed1, speed1, speed1);
-
-    }
-    public void urca_glis(float pos){
-        float err = 70;
-
-        float dif = pos - robot.glisiere_dr.getCurrentPosition();
-        float sgn = Math.signum(dif);
-
-
-        while (robot.glisiere_dr.getCurrentPosition() > pos + err || robot.glisiere_dr.getCurrentPosition() < pos - err){
-            robot.glisiere_st.setPower(1 * sgn);
-            robot.glisiere_dr.setPower(1 * sgn);
-
-            dif = pos - robot.glisiere_dr.getCurrentPosition();
-            sgn = Math.signum(dif);
-        }
-
-        robot.glisiere_st.setPower(0);
-        robot.glisiere_dr.setPower(0);
-    }
-
-    public void cob_glis(){
-        float err = 70;
-
-        float dif = robot.glisiere_dr.getCurrentPosition();
-        float sgn = Math.signum(dif);
-
-
-        while (robot.glisiere_dr.getCurrentPosition() > err || robot.glisiere_dr.getCurrentPosition() < - err){
-            robot.glisiere_st.setPower(-1 * sgn);
-            robot.glisiere_dr.setPower(-1 * sgn);
-
-            dif = robot.glisiere_dr.getCurrentPosition();
-            sgn = Math.signum(dif);
-        }
-
-        robot.glisiere_st.setPower(0);
-        robot.glisiere_dr.setPower(0);
-    }
 
 }
 
