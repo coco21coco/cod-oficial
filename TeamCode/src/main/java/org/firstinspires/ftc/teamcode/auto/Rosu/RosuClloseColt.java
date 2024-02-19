@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
+import org.firstinspires.ftc.teamcode.PIDglis;
 import org.firstinspires.ftc.teamcode.drive.HMap;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
@@ -33,6 +34,10 @@ public class RosuClloseColt extends LinearOpMode {
     private TfodProcessor tfod;
 
     private VisionPortal visionPortal;
+
+    public static double Kp = 0.005,
+            Ki = 0.00001,
+            Kd = 0.00001;
 
     @Override
     public void runOpMode() {
@@ -191,4 +196,44 @@ public class RosuClloseColt extends LinearOpMode {
 
     }   // end method telemetryTfod()
 
+    public void urca(HMap r){
+
+        PIDglis pidGlis = new PIDglis(Kp, Ki, Kd);
+
+        double glisPoz =0;
+        double glisPwr = 0;
+
+        pidGlis.setTargetPosition(1000);
+
+        while(glisPoz <= 800){
+            glisPoz = r.glisiere_dr.getCurrentPosition();
+
+            r.glisiere_st.setPower(glisPwr);
+            r.glisiere_dr.setPower(glisPwr);
+
+            glisPwr = pidGlis.update(glisPoz);
+        }
+
+
+    }
+
+    public void coboara(HMap r){
+
+        PIDglis pidGlis = new PIDglis(Kp, Ki, Kd);
+
+        double glisPoz = 1000;
+        double glisPwr = 0;
+
+        pidGlis.setTargetPosition(0);
+
+        while(glisPoz >= 0){
+            glisPoz = r.glisiere_dr.getCurrentPosition();
+
+            r.glisiere_st.setPower(glisPwr);
+            r.glisiere_dr.setPower(glisPwr);
+
+            glisPwr = pidGlis.update(glisPoz);
+        }
+
+    }
 }

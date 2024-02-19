@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
+import org.firstinspires.ftc.teamcode.PIDglis;
 import org.firstinspires.ftc.teamcode.drive.HMap;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
@@ -32,8 +33,10 @@ public class RosuClose extends LinearOpMode {
 
 
     public  static int INATLTIME_GLIS = 100;
-    HMap robot = new HMap();
 
+    public static double Kp = 0.005,
+            Ki = 0.00001,
+            Kd = 0.00001;
 
 
     @Override
@@ -115,21 +118,19 @@ public class RosuClose extends LinearOpMode {
                     TrajectorySequence traiect = drive.trajectorySequenceBuilder( new Pose2d(13, -60, Math.toRadians(90)))
                             .forward(17.5)
                             .back(3)
+                            .lineToSplineHeading(new Pose2d(46, -40, Math.toRadians(180)))
                             .build();
 
-                    drive.followTrajectorySequence(traiect);
 
-                    TrajectorySequence panou = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
-                            .lineToSplineHeading(new Pose2d(46, -40, Math.toRadians(180)))
-                            .back(1)
-                            .waitSeconds(2)
-                            .addTemporalMarker(-0.5, () -> urca())
-                            .addTemporalMarker(1, () -> coboara())
+                    TrajectorySequence panou = drive.trajectorySequenceBuilder(new Pose2d(46, -40, Math.toRadians(180)))
+                            .addDisplacementMarker(0, ()->coboara(robot))
                             .strafeRight(18)
                             .back(10)
-                            .build();
-
-                    drive.followTrajectorySequence(panou);
+                                    .build();
+                     drive.followTrajectorySequence(traiect);
+                     urca(robot);
+                     sleep(1000);
+                     drive.followTrajectorySequence(panou);
                 }
 
             }
@@ -203,21 +204,44 @@ public class RosuClose extends LinearOpMode {
 
     }   // end method telemetryTfod()
 
-   public void urca(){
+   public void urca(HMap r){
 
-        robot.glisiere_dr.setTargetPosition(INATLTIME_GLIS);
-        robot.glisiere_dr.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+       PIDglis pidGlis = new PIDglis(Kp, Ki, Kd);
+
+       double glisPoz =0;
+       double glisPwr = 0;
+
+       pidGlis.setTargetPosition(1000);
+
+       while(glisPoz <= 800){
+            glisPoz = r.glisiere_dr.getCurrentPosition();
+
+            r.glisiere_st.setPower(glisPwr);
+            r.glisiere_dr.setPower(glisPwr);
+
+            glisPwr = pidGlis.update(glisPoz);
+       }
 
 
    }
 
-   public void coboara(){
+   public void coboara(HMap r){
 
+       PIDglis pidGlis = new PIDglis(Kp, Ki, Kd);
 
+       double glisPoz = 1000;
+       double glisPwr = 0;
 
+       pidGlis.setTargetPosition(0);
 
-        robot.glisiere_dr.setTargetPosition(0);
-        robot.glisiere_dr.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+       while(glisPoz >= 0){
+           glisPoz = r.glisiere_dr.getCurrentPosition();
+
+           r.glisiere_st.setPower(glisPwr);
+           r.glisiere_dr.setPower(glisPwr);
+
+           glisPwr = pidGlis.update(glisPoz);
+       }
 
    }
 }
