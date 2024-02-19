@@ -23,7 +23,7 @@ import org.openftc.easyopencv.OpenCvWebcam;
 
 import java.util.List;
 
-@Autonomous(name = "Rosu Far")
+@Autonomous(name = "Rosu Far MJL")
 public class RosuFar extends LinearOpMode {
     private static final boolean USE_WEBCAM = true;  // true for webcam, false for phone camera
     private static final String TFOD_MODEL_FILE = "/sdcard/FIRST/tflitemodels/RED_TSE.tflite";
@@ -97,12 +97,18 @@ public class RosuFar extends LinearOpMode {
                             .back(5)
                             .turn(1)
                             .lineToSplineHeading(new Pose2d(46, -35, Math.toRadians(180)))
-                            .back(1)
+                            .build();
+
+                    TrajectorySequence panou = drive.trajectorySequenceBuilder(new Pose2d(46, -35, Math.toRadians(180)))
+                            .addDisplacementMarker(0, ()->coboara(robot))
                             .strafeRight(18)
                             .back(10)
                             .build();
 
                     drive.followTrajectorySequence(traiect);
+                    urca(robot);
+                    sleep(1000);
+                    drive.followTrajectorySequence(panou);
 
                     telemetry.update();
                 }
@@ -116,12 +122,18 @@ public class RosuFar extends LinearOpMode {
                             .forward(17.5)
                             .back(0.1)
                             .lineToSplineHeading(new Pose2d(46, -35, Math.toRadians(180)))
-                            .back(1)
+                            .build();
+
+                    TrajectorySequence panou = drive.trajectorySequenceBuilder(new Pose2d(46, -35, Math.toRadians(180)))
+                            .addDisplacementMarker(0, ()->coboara(robot))
                             .strafeRight(18)
                             .back(10)
                             .build();
 
                     drive.followTrajectorySequence(traiect);
+                    urca(robot);
+                    sleep(1000);
+                    drive.followTrajectorySequence(panou);
                 }
 
             }
@@ -135,13 +147,21 @@ public class RosuFar extends LinearOpMode {
                         .splineTo(new Vector2d(-30, -38), Math.toRadians(65))
                         .back(5)
                         .turn(-0.5)
+                        .addDisplacementMarker(()->robot.colectare.setPower(-1))
                         .lineToSplineHeading(new Pose2d(46, -35, Math.toRadians(180)))
-                        .back(1)
+                        .build();
+
+                TrajectorySequence panou = drive.trajectorySequenceBuilder(new Pose2d(46, -35, Math.toRadians(180)))
+                        .addDisplacementMarker(0, ()->coboara(robot))
                         .strafeRight(18)
                         .back(10)
                         .build();
 
                 drive.followTrajectorySequence(traiect);
+                robot.colectare.setPower(0);
+                urca(robot);
+                sleep(1000);
+                drive.followTrajectorySequence(panou);
             }
         }
 

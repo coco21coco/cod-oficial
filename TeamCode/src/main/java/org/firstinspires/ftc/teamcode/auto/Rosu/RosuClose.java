@@ -33,11 +33,11 @@ public class RosuClose extends LinearOpMode {
 
 
     public  static int INATLTIME_GLIS = 100;
+    HMap robot = new HMap();
 
     public static double Kp = 0.005,
             Ki = 0.00001,
             Kd = 0.00001;
-
 
     @Override
     public void runOpMode() {
@@ -95,15 +95,23 @@ public class RosuClose extends LinearOpMode {
 
                     TrajectorySequence traiect = drive.trajectorySequenceBuilder( new Pose2d(13, -60, Math.toRadians(90)))
                             .lineToSplineHeading(new Pose2d(10, -35.9, Math.toRadians(130)))
+                            .addDisplacementMarker(()->robot.colectare.setPower(1))
                             .back(0.1)
                             .lineToSplineHeading(new Pose2d(46, -35, Math.toRadians(180)))
-                            .back(1)
+                            .addDisplacementMarker(()->robot.colectare.setPower(-1))
+                            .build();
+
+                    TrajectorySequence panou = drive.trajectorySequenceBuilder(new Pose2d(46, -35, Math.toRadians(180)))
+                            .addDisplacementMarker(0, ()->coboara(robot))
                             .strafeRight(18)
                             .back(10)
                             .build();
 
                     drive.followTrajectorySequence(traiect);
-
+                    robot.colectare.setPower(0);
+                    urca(robot);
+                    sleep(1000);
+                    drive.followTrajectorySequence(panou);
 
                     telemetry.update();
                 }
@@ -117,20 +125,24 @@ public class RosuClose extends LinearOpMode {
 
                     TrajectorySequence traiect = drive.trajectorySequenceBuilder( new Pose2d(13, -60, Math.toRadians(90)))
                             .forward(17.5)
+                            .addDisplacementMarker(()->robot.colectare.setPower(1))
                             .back(3)
                             .lineToSplineHeading(new Pose2d(46, -40, Math.toRadians(180)))
                             .build();
 
 
-                    TrajectorySequence panou = drive.trajectorySequenceBuilder(new Pose2d(46, -40, Math.toRadians(180)))
+
+                    TrajectorySequence panou = drive.trajectorySequenceBuilder(new Pose2d(46, -35, Math.toRadians(180)))
                             .addDisplacementMarker(0, ()->coboara(robot))
                             .strafeRight(18)
                             .back(10)
-                                    .build();
-                     drive.followTrajectorySequence(traiect);
-                     urca(robot);
-                     sleep(1000);
-                     drive.followTrajectorySequence(panou);
+                            .build();
+
+                    drive.followTrajectorySequence(traiect);
+                    robot.colectare.setPower(0);
+                    urca(robot);
+                    sleep(1000);
+                    drive.followTrajectorySequence(panou);
                 }
 
             }
@@ -142,14 +154,22 @@ public class RosuClose extends LinearOpMode {
 
                 TrajectorySequence traiect = drive.trajectorySequenceBuilder( new Pose2d(13, -60, Math.toRadians(90)))
                         .lineToSplineHeading(new Pose2d(17, -35.9, Math.toRadians(40)))
+                        .addDisplacementMarker(()->robot.colectare.setPower(1))
                         .back(4)
                         .lineToSplineHeading(new Pose2d(46, -35, Math.toRadians(180)))
-                        .back(1)
+                        .build();
+
+                TrajectorySequence panou = drive.trajectorySequenceBuilder(new Pose2d(46, -35, Math.toRadians(180)))
+                        .addDisplacementMarker(0, ()->coboara(robot))
                         .strafeRight(18)
                         .back(10)
                         .build();
 
                 drive.followTrajectorySequence(traiect);
+                robot.colectare.setPower(0);
+                urca(robot);
+                sleep(1000);
+                drive.followTrajectorySequence(panou);
             }
         }
 
@@ -204,44 +224,44 @@ public class RosuClose extends LinearOpMode {
 
     }   // end method telemetryTfod()
 
-   public void urca(HMap r){
+    public void urca(HMap r){
 
-       PIDglis pidGlis = new PIDglis(Kp, Ki, Kd);
+        PIDglis pidGlis = new PIDglis(Kp, Ki, Kd);
 
-       double glisPoz =0;
-       double glisPwr = 0;
+        double glisPoz =0;
+        double glisPwr = 0;
 
-       pidGlis.setTargetPosition(1000);
+        pidGlis.setTargetPosition(1000);
 
-       while(glisPoz <= 800){
+        while(glisPoz <= 800){
             glisPoz = r.glisiere_dr.getCurrentPosition();
 
             r.glisiere_st.setPower(glisPwr);
             r.glisiere_dr.setPower(glisPwr);
 
             glisPwr = pidGlis.update(glisPoz);
-       }
+        }
 
 
-   }
+    }
 
-   public void coboara(HMap r){
+    public void coboara(HMap r){
 
-       PIDglis pidGlis = new PIDglis(Kp, Ki, Kd);
+        PIDglis pidGlis = new PIDglis(Kp, Ki, Kd);
 
-       double glisPoz = 1000;
-       double glisPwr = 0;
+        double glisPoz = 1000;
+        double glisPwr = 0;
 
-       pidGlis.setTargetPosition(0);
+        pidGlis.setTargetPosition(0);
 
-       while(glisPoz >= 0){
-           glisPoz = r.glisiere_dr.getCurrentPosition();
+        while(glisPoz >= 0){
+            glisPoz = r.glisiere_dr.getCurrentPosition();
 
-           r.glisiere_st.setPower(glisPwr);
-           r.glisiere_dr.setPower(glisPwr);
+            r.glisiere_st.setPower(glisPwr);
+            r.glisiere_dr.setPower(glisPwr);
 
-           glisPwr = pidGlis.update(glisPoz);
-       }
+            glisPwr = pidGlis.update(glisPoz);
+        }
 
-   }
+    }
 }
