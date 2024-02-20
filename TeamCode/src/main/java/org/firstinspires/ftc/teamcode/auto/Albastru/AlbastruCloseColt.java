@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
+import org.firstinspires.ftc.teamcode.PIDglis;
 import org.firstinspires.ftc.teamcode.drive.HMap;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
@@ -30,6 +31,9 @@ public class AlbastruCloseColt extends LinearOpMode {
             "TSE"
     };
 
+    public static double Kp = 0.005,
+            Ki = 0.00001,
+            Kd = 0.00001;
     private TfodProcessor tfod;
 
     private VisionPortal visionPortal;
@@ -90,14 +94,22 @@ public class AlbastruCloseColt extends LinearOpMode {
 
                     TrajectorySequence traiect = drive.trajectorySequenceBuilder( new Pose2d(11, 60, Math.toRadians(-90)))
                             .lineToSplineHeading(new Pose2d(15, 40, Math.toRadians(-45)))
+                            .addDisplacementMarker(0, () -> robot.colectare.setPower(1))
                             .back(5)
                             .lineToSplineHeading(new Pose2d(51, 35, Math.toRadians(180)))
-                            .forward(1)
+                            .build();
+
+                    TrajectorySequence panou = drive.trajectorySequenceBuilder(new Pose2d(51, 35, Math.toRadians(180)))
+                            .addDisplacementMarker(0, ()->coboara(robot))
                             .strafeRight(18)
                             .back(10)
                             .build();
 
                     drive.followTrajectorySequence(traiect);
+                    robot.colectare.setPower(0);
+                    urca(robot);
+                    sleep(1000);
+                    drive.followTrajectorySequence(panou);
 
 
                     telemetry.update();
@@ -110,14 +122,22 @@ public class AlbastruCloseColt extends LinearOpMode {
 
                     TrajectorySequence traiect = drive.trajectorySequenceBuilder( new Pose2d(11, 60, Math.toRadians(-90)))
                             .lineTo(new Vector2d(11, 34))
+                            .addDisplacementMarker(0, () -> robot.colectare.setPower(1))
                             .back(5)
                             .lineToSplineHeading(new Pose2d(51, 35, Math.toRadians(180)))
-                            .forward(1)
+                            .build();
+
+                    TrajectorySequence panou = drive.trajectorySequenceBuilder(new Pose2d(51, 35, Math.toRadians(180)))
+                            .addDisplacementMarker(0, ()->coboara(robot))
                             .strafeRight(18)
                             .back(10)
                             .build();
 
                     drive.followTrajectorySequence(traiect);
+                    robot.colectare.setPower(0);
+                    urca(robot);
+                    sleep(1000);
+                    drive.followTrajectorySequence(panou);
                 }
 
             }
@@ -129,14 +149,22 @@ public class AlbastruCloseColt extends LinearOpMode {
 
                 TrajectorySequence traiect = drive.trajectorySequenceBuilder(new Pose2d(11, 60, Math.toRadians(-90)))
                         .lineToSplineHeading(new Pose2d(9, 35, Math.toRadians(220)))
+                        .addDisplacementMarker(0, () -> robot.colectare.setPower(1))
                         .back(5)
                         .lineToSplineHeading(new Pose2d(51, 35, Math.toRadians(180)))
-                        .forward(1)
+                        .build();
+
+                TrajectorySequence panou = drive.trajectorySequenceBuilder(new Pose2d(51, 35, Math.toRadians(180)))
+                        .addDisplacementMarker(0, ()->coboara(robot))
                         .strafeRight(18)
                         .back(10)
                         .build();
 
                 drive.followTrajectorySequence(traiect);
+                robot.colectare.setPower(0);
+                urca(robot);
+                sleep(1000);
+                drive.followTrajectorySequence(panou);
             }
         }
 
@@ -190,5 +218,46 @@ public class AlbastruCloseColt extends LinearOpMode {
         }   // end for() loop
 
     }   // end method telemetryTfod()
+
+    public void urca(HMap r){
+
+        PIDglis pidGlis = new PIDglis(Kp, Ki, Kd);
+
+        double glisPoz =0;
+        double glisPwr = 0;
+
+        pidGlis.setTargetPosition(1000);
+
+        while(glisPoz <= 800){
+            glisPoz = r.glisiere_dr.getCurrentPosition();
+
+            r.glisiere_st.setPower(glisPwr);
+            r.glisiere_dr.setPower(glisPwr);
+
+            glisPwr = pidGlis.update(glisPoz);
+        }
+
+
+    }
+
+    public void coboara(HMap r){
+
+        PIDglis pidGlis = new PIDglis(Kp, Ki, Kd);
+
+        double glisPoz = 1000;
+        double glisPwr = 0;
+
+        pidGlis.setTargetPosition(0);
+
+        while(glisPoz >= 0){
+            glisPoz = r.glisiere_dr.getCurrentPosition();
+
+            r.glisiere_st.setPower(glisPwr);
+            r.glisiere_dr.setPower(glisPwr);
+
+            glisPwr = pidGlis.update(glisPoz);
+        }
+
+    }
 
 }

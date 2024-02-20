@@ -23,8 +23,8 @@ public class HMap {
     public static double cutie_inkis = 0.7,
                     cutie_deskis = 0.3,
 
-                    avion_armat = 0.54,
-                    avion_tras = 0.7,
+                    avion_armat = 0.8,
+                    avion_tras = 0.3,
                     cutie_dr_extins = 0.7,
                     cutie_st_extins = 0.3,
                     cutie_dr_strans = 0.95,
@@ -53,6 +53,10 @@ public class HMap {
        cutie_st = hmap.get(Servo.class, "cutie_st");
 
        cutie = hmap.get(Servo.class, "cutie");
+
+       avion = hmap.get(Servo.class, "avion");
+
+       armeaza_avion();
        strange_cutie();
        deschide_cutie();
 

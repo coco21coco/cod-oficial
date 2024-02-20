@@ -95,17 +95,23 @@ public class RosuFarColt extends LinearOpMode {
 
                     TrajectorySequence traiect = drive.trajectorySequenceBuilder(  new Pose2d(-35, -60, Math.toRadians(90)))
                             .splineTo(new Vector2d(-40, -35), Math.toRadians(130))
+                            .addDisplacementMarker(0, () -> robot.colectare.setPower(1))
                             .back(5)
                             .turn(1)
                             .lineToSplineHeading(new Pose2d(46, -35, Math.toRadians(180)))
-                            .back(1)
+                            .build();
+
+                    TrajectorySequence panou = drive.trajectorySequenceBuilder(new Pose2d(46, -35, Math.toRadians(180)))
+                            .addDisplacementMarker(0, ()->coboara(robot))
                             .strafeLeft(18)
                             .back(10)
                             .build();
 
                     drive.followTrajectorySequence(traiect);
-
-
+                    robot.colectare.setPower(0);
+                    urca(robot);
+                    sleep(1000);
+                    drive.followTrajectorySequence(panou);
                     telemetry.update();
                 }
 
@@ -115,15 +121,23 @@ public class RosuFarColt extends LinearOpMode {
                     drive.setPoseEstimate(new Pose2d(13, -60, Math.toRadians(90)));
 
                     TrajectorySequence traiect = drive.trajectorySequenceBuilder(  new Pose2d(-35, -60, Math.toRadians(90)))
-                            .forward(17.5)
+                            .lineTo(new Vector2d(-35, -40))
+                            .addDisplacementMarker(0, () -> robot.colectare.setPower(1))
                             .back(0.1)
                             .lineToSplineHeading(new Pose2d(46, -35, Math.toRadians(180)))
-                            .back(1)
+                            .build();
+
+                    TrajectorySequence panou = drive.trajectorySequenceBuilder(new Pose2d(46, -35, Math.toRadians(180)))
+                            .addDisplacementMarker(0, ()->coboara(robot))
                             .strafeLeft(18)
                             .back(10)
                             .build();
 
                     drive.followTrajectorySequence(traiect);
+                    robot.colectare.setPower(0);
+                    urca(robot);
+                    sleep(1000);
+                    drive.followTrajectorySequence(panou);
                 }
 
             }
@@ -135,15 +149,23 @@ public class RosuFarColt extends LinearOpMode {
 
                 TrajectorySequence traiect = drive.trajectorySequenceBuilder( new Pose2d(-35, -60, Math.toRadians(90)))
                         .splineTo(new Vector2d(-30, -38), Math.toRadians(65))
+                        .addDisplacementMarker(0, () -> robot.colectare.setPower(1))
                         .back(5)
                         .turn(-0.5)
                         .lineToSplineHeading(new Pose2d(46, -35, Math.toRadians(180)))
-                        .back(1)
+                        .build();
+
+                TrajectorySequence panou = drive.trajectorySequenceBuilder(new Pose2d(46, -35, Math.toRadians(180)))
+                        .addDisplacementMarker(0, ()->coboara(robot))
                         .strafeLeft(18)
                         .back(10)
                         .build();
 
                 drive.followTrajectorySequence(traiect);
+                robot.colectare.setPower(0);
+                urca(robot);
+                sleep(1000);
+                drive.followTrajectorySequence(panou);
             }
         }
 

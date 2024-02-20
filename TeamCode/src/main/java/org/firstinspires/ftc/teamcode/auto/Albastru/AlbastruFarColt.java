@@ -94,14 +94,22 @@ public class AlbastruFarColt extends LinearOpMode {
 
                     TrajectorySequence traiect = drive.trajectorySequenceBuilder(new Pose2d(-35, 60, Math.toRadians(-90)))
                             .lineToSplineHeading(new Pose2d(-31, 35, Math.toRadians(-45)))
+                            .addDisplacementMarker(0, () -> robot.colectare.setPower(1))
                             .back(5)
                             .lineToSplineHeading(new Pose2d(51, 35, Math.toRadians(180)))
-                            .forward(1)
+                            .build();
+
+                    TrajectorySequence panou = drive.trajectorySequenceBuilder(new Pose2d(51, 35, Math.toRadians(180)))
+                            .addDisplacementMarker(0, ()->coboara(robot))
                             .strafeRight(18)
                             .back(10)
                             .build();
 
                     drive.followTrajectorySequence(traiect);
+                    robot.colectare.setPower(0);
+                    urca(robot);
+                    sleep(1000);
+                    drive.followTrajectorySequence(panou);
 
 
                     telemetry.update();
@@ -114,14 +122,22 @@ public class AlbastruFarColt extends LinearOpMode {
 
                     TrajectorySequence traiect = drive.trajectorySequenceBuilder(new Pose2d(-35, 60, Math.toRadians(-90)))
                             .lineToSplineHeading(new Pose2d(-42, 35, Math.toRadians(-135)))
+                            .addDisplacementMarker(0, () -> robot.colectare.setPower(1))
                             .back(5)
                             .lineToSplineHeading(new Pose2d(51, 35, Math.toRadians(180)))
-                            .forward(1)
+                            .build();
+
+                    TrajectorySequence panou = drive.trajectorySequenceBuilder(new Pose2d(51, 35, Math.toRadians(180)))
+                            .addDisplacementMarker(0, ()->coboara(robot))
                             .strafeRight(18)
                             .back(10)
                             .build();
 
                     drive.followTrajectorySequence(traiect);
+                    robot.colectare.setPower(0);
+                    urca(robot);
+                    sleep(1000);
+                    drive.followTrajectorySequence(panou);
                 }
 
             }
@@ -133,14 +149,22 @@ public class AlbastruFarColt extends LinearOpMode {
 
                 TrajectorySequence traiect = drive.trajectorySequenceBuilder(new Pose2d(11, 60, Math.toRadians(-90)))
                         .lineToSplineHeading(new Pose2d(9, 35, Math.toRadians(220)))
+                        .addDisplacementMarker(0, () -> robot.colectare.setPower(1))
                         .back(5)
                         .lineToSplineHeading(new Pose2d(51, 35, Math.toRadians(180)))
-                        .forward(1)
+                        .build();
+
+                TrajectorySequence panou = drive.trajectorySequenceBuilder(new Pose2d(51, 35, Math.toRadians(180)))
+                        .addDisplacementMarker(0, ()->coboara(robot))
                         .strafeRight(18)
                         .back(10)
                         .build();
 
                 drive.followTrajectorySequence(traiect);
+                robot.colectare.setPower(0);
+                urca(robot);
+                sleep(1000);
+                drive.followTrajectorySequence(panou);
             }
         }
 

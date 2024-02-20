@@ -96,12 +96,20 @@ public class AlbastruFarMjl extends LinearOpMode {
                             .lineToSplineHeading(new Pose2d(-31, 35, Math.toRadians(-45)))
                             .back(5)
                             .lineToSplineHeading(new Pose2d(51, 35, Math.toRadians(180)))
-                            .forward(1)
+                            .addDisplacementMarker(0, () -> robot.colectare.setPower(1))
+                            .build();
+
+                    TrajectorySequence panou = drive.trajectorySequenceBuilder(new Pose2d(51, 35, Math.toRadians(180)))
+                            .addDisplacementMarker(0, ()->coboara(robot))
                             .strafeLeft(18)
                             .back(10)
                             .build();
 
                     drive.followTrajectorySequence(traiect);
+                    robot.colectare.setPower(0);
+                    urca(robot);
+                    sleep(1000);
+                    drive.followTrajectorySequence(panou);
 
 
                     telemetry.update();
@@ -116,12 +124,20 @@ public class AlbastruFarMjl extends LinearOpMode {
                             .lineTo(new Vector2d(-35, 35))
                             .back(5)
                             .lineToSplineHeading(new Pose2d(51, 35, Math.toRadians(180)))
-                            .forward(1)
+                            .addDisplacementMarker(0, () -> robot.colectare.setPower(1))
+                            .build();
+
+                    TrajectorySequence panou = drive.trajectorySequenceBuilder(new Pose2d(51, 35, Math.toRadians(180)))
+                            .addDisplacementMarker(0, ()->coboara(robot))
                             .strafeLeft(18)
                             .back(10)
                             .build();
 
                     drive.followTrajectorySequence(traiect);
+                    robot.colectare.setPower(0);
+                    urca(robot);
+                    sleep(1000);
+                    drive.followTrajectorySequence(panou);
                 }
 
             }
@@ -135,12 +151,20 @@ public class AlbastruFarMjl extends LinearOpMode {
                         .lineToSplineHeading(new Pose2d(-42, 35, Math.toRadians(-135)))
                         .back(5)
                         .lineToSplineHeading(new Pose2d(51, 35, Math.toRadians(180)))
-                        .forward(1)
+                        .addDisplacementMarker(0, () -> robot.colectare.setPower(1))
+                        .build();
+
+                TrajectorySequence panou = drive.trajectorySequenceBuilder(new Pose2d(51, 35, Math.toRadians(180)))
+                        .addDisplacementMarker(0, ()->coboara(robot))
                         .strafeLeft(18)
                         .back(10)
                         .build();
 
                 drive.followTrajectorySequence(traiect);
+                robot.colectare.setPower(0);
+                urca(robot);
+                sleep(1000);
+                drive.followTrajectorySequence(panou);
             }
         }
 

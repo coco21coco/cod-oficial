@@ -145,7 +145,7 @@ public class TeleOP extends LinearOpMode {
 
             if (gamepad2.y) {
                 robot.trage_avion();
-                sleep(200);
+                sleep(500);
                 robot.armeaza_avion();
             }
             // glisiere
@@ -154,8 +154,10 @@ public class TeleOP extends LinearOpMode {
             if(gamepad2.right_stick_button)
                 glis_toggle = false;
 
-            if(gamepad2.left_stick_button)
+            if(gamepad2.left_stick_button) {
                 glis_toggle = true;
+                urca = false;
+            }
 
 
             if(gamepad2.right_bumper) {
