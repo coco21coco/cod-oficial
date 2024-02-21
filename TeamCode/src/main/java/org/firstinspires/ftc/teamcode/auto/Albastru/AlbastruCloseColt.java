@@ -92,11 +92,11 @@ public class AlbastruCloseColt extends LinearOpMode {
                 if (TSE.getLeft() < 200) {
                     drive.setPoseEstimate(new Pose2d(11, 60, Math.toRadians(-90)));
 
-                    TrajectorySequence traiect = drive.trajectorySequenceBuilder( new Pose2d(11, 60, Math.toRadians(-90)))
-                            .lineToSplineHeading(new Pose2d(15, 40, Math.toRadians(-45)))
+                    TrajectorySequence traiect = drive.trajectorySequenceBuilder(new Pose2d(13, 60, Math.toRadians(270)))
+                            .lineToSplineHeading(new Pose2d(10, 35.9, Math.toRadians(230)))
                             .addDisplacementMarker(0, () -> robot.colectare.setPower(1))
-                            .back(5)
-                            .lineToSplineHeading(new Pose2d(51, 35, Math.toRadians(180)))
+                            .back(0.1)
+                            .lineToSplineHeading(new Pose2d(46, 35, Math.toRadians(180)))
                             .build();
 
                     TrajectorySequence panou = drive.trajectorySequenceBuilder(new Pose2d(51, 35, Math.toRadians(180)))
