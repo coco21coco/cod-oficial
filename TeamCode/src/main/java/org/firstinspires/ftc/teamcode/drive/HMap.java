@@ -9,8 +9,6 @@ import com.acmerobotics.dashboard.config.Config;
 @Config
 public class HMap {
 
-
-
     public DcMotorEx colectare = null,
                      glisiere_dr = null,
                      glisiere_st = null;
@@ -20,15 +18,15 @@ public class HMap {
                 avion = null,
                 cutie = null;
 
-    public static double cutie_inkis = 0.7,
-                    cutie_deskis = 0.3,
+    public static double cutie_inkis = 0.55,
+                    cutie_deskis = 0.4,
 
                     avion_armat = 0.8,
                     avion_tras = 0.3,
                     cutie_dr_extins = 0.7,
                     cutie_st_extins = 0.3,
-                    cutie_dr_strans = 0.95,
-                    cutie_st_strans  = 0.05;
+                    cutie_dr_strans = 0.9,
+                    cutie_st_strans  = 0.1;
    public void init(HardwareMap hmap){
 
        

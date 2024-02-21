@@ -90,12 +90,16 @@ public class AlbastruFarColt extends LinearOpMode {
 
                 //caz 1
                 if (TSE.getLeft() < 200) {
-                    drive.setPoseEstimate(new Pose2d(13, -60, Math.toRadians(90)));
+                    drive.setPoseEstimate(new Pose2d(-35, 60, Math.toRadians(-90)));
 
                     TrajectorySequence traiect = drive.trajectorySequenceBuilder(new Pose2d(-35, 60, Math.toRadians(-90)))
                             .lineToSplineHeading(new Pose2d(-31, 35, Math.toRadians(-45)))
-                            .addDisplacementMarker(0, () -> robot.colectare.setPower(1))
+                            .addTemporalMarker(()->robot.colectare.setPower(1))
+                            .waitSeconds(0.5)
                             .back(5)
+
+                            .lineToSplineHeading(new Pose2d(-35, 20, Math.toRadians(0)))
+                            .lineToSplineHeading(new Pose2d(51, 20, Math.toRadians(180)))
                             .lineToSplineHeading(new Pose2d(51, 35, Math.toRadians(180)))
                             .build();
 
@@ -118,12 +122,15 @@ public class AlbastruFarColt extends LinearOpMode {
                 //caz 2
                 if (TSE.getLeft() >= 200) {
 
-                    drive.setPoseEstimate(new Pose2d(13, -60, Math.toRadians(90)));
+                    drive.setPoseEstimate(new Pose2d(-35, 60, Math.toRadians(-90)));
 
                     TrajectorySequence traiect = drive.trajectorySequenceBuilder(new Pose2d(-35, 60, Math.toRadians(-90)))
-                            .lineToSplineHeading(new Pose2d(-42, 35, Math.toRadians(-135)))
-                            .addDisplacementMarker(0, () -> robot.colectare.setPower(1))
+                            .lineToSplineHeading(new Pose2d(-35, 25, Math.toRadians(0)))
+                            .addTemporalMarker(()->robot.colectare.setPower(1))
+                            .waitSeconds(0.5)
                             .back(5)
+                            .lineToSplineHeading(new Pose2d(-35, 20, Math.toRadians(0)))
+                            .lineToSplineHeading(new Pose2d(51, 20, Math.toRadians(180)))
                             .lineToSplineHeading(new Pose2d(51, 35, Math.toRadians(180)))
                             .build();
 
@@ -145,7 +152,7 @@ public class AlbastruFarColt extends LinearOpMode {
             //caz 3
             if (currentRecognition.size() == 0) {
 
-                drive.setPoseEstimate(new Pose2d(13, -60, Math.toRadians(90)));
+                drive.setPoseEstimate(new Pose2d(-35, 60, Math.toRadians(-90)));
 
                 TrajectorySequence traiect = drive.trajectorySequenceBuilder(new Pose2d(11, 60, Math.toRadians(-90)))
                         .lineToSplineHeading(new Pose2d(9, 35, Math.toRadians(220)))

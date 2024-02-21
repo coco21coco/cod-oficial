@@ -91,13 +91,14 @@ public class RosuFarColt extends LinearOpMode {
 
                 //caz 1
                 if (TSE.getLeft() < 200) {
-                    drive.setPoseEstimate(new Pose2d(13, -60, Math.toRadians(90)));
+                    drive.setPoseEstimate(new Pose2d(-35, -60, Math.toRadians(90)));
 
                     TrajectorySequence traiect = drive.trajectorySequenceBuilder(  new Pose2d(-35, -60, Math.toRadians(90)))
                             .splineTo(new Vector2d(-40, -35), Math.toRadians(130))
-                            .addDisplacementMarker(0, () -> robot.colectare.setPower(1))
-                            .back(5)
-                            .turn(1)
+                            .addTemporalMarker(()-> robot.colectare.setPower(1))
+                            .waitSeconds(0.5)
+                            .lineToSplineHeading(new Pose2d(-35, -10, Math.toRadians(180) ))
+                            .lineToSplineHeading(new Pose2d(46, -10, Math.toRadians(180)))
                             .lineToSplineHeading(new Pose2d(46, -35, Math.toRadians(180)))
                             .build();
 
@@ -118,12 +119,14 @@ public class RosuFarColt extends LinearOpMode {
                 //caz 2
                 if (TSE.getLeft() >= 200) {
 
-                    drive.setPoseEstimate(new Pose2d(13, -60, Math.toRadians(90)));
+                    drive.setPoseEstimate(new Pose2d(-35, -60, Math.toRadians(90)));
 
                     TrajectorySequence traiect = drive.trajectorySequenceBuilder(  new Pose2d(-35, -60, Math.toRadians(90)))
-                            .lineTo(new Vector2d(-35, -40))
-                            .addDisplacementMarker(0, () -> robot.colectare.setPower(1))
-                            .back(0.1)
+                            .lineToSplineHeading(new Pose2d(-35, -25, Math.toRadians(0) ))
+                            .addDisplacementMarker(()-> robot.colectare.setPower(1))
+                            .waitSeconds(0.5)
+                            .lineToSplineHeading(new Pose2d(-35, -10, Math.toRadians(0) ))
+                            .lineToSplineHeading(new Pose2d(46, -10, Math.toRadians(180)))
                             .lineToSplineHeading(new Pose2d(46, -35, Math.toRadians(180)))
                             .build();
 
@@ -145,13 +148,15 @@ public class RosuFarColt extends LinearOpMode {
             //caz 3
             if (currentRecognition.size() == 0) {
 
-                drive.setPoseEstimate(new Pose2d(13, -60, Math.toRadians(90)));
+                drive.setPoseEstimate(new Pose2d(-35, -60, Math.toRadians(90)));
 
                 TrajectorySequence traiect = drive.trajectorySequenceBuilder( new Pose2d(-35, -60, Math.toRadians(90)))
-                        .splineTo(new Vector2d(-30, -38), Math.toRadians(65))
-                        .addDisplacementMarker(0, () -> robot.colectare.setPower(1))
-                        .back(5)
-                        .turn(-0.5)
+                        .splineTo(new Vector2d(-30, -43), Math.toRadians(60))
+                        .addTemporalMarker(()-> robot.colectare.setPower(1))
+                        .waitSeconds(0.5)
+                        .back(1)
+                        .lineToSplineHeading(new Pose2d(-35, -10, Math.toRadians(180) ))
+                        .lineToSplineHeading(new Pose2d(46, -10, Math.toRadians(180)))
                         .lineToSplineHeading(new Pose2d(46, -35, Math.toRadians(180)))
                         .build();
 
@@ -229,7 +234,7 @@ public class RosuFarColt extends LinearOpMode {
 
         pidGlis.setTargetPosition(1000);
 
-        while(glisPoz <= 800){
+        while(glisPoz <= 800 && opModeIsActive()){
             glisPoz = r.glisiere_dr.getCurrentPosition();
 
             r.glisiere_st.setPower(glisPwr);
@@ -250,7 +255,7 @@ public class RosuFarColt extends LinearOpMode {
 
         pidGlis.setTargetPosition(0);
 
-        while(glisPoz >= 0){
+        while(glisPoz >= 0 && opModeIsActive()){
             glisPoz = r.glisiere_dr.getCurrentPosition();
 
             r.glisiere_st.setPower(glisPwr);

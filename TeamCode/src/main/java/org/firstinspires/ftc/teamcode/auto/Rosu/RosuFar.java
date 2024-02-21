@@ -92,10 +92,12 @@ public class RosuFar extends LinearOpMode {
                 if (TSE.getLeft() < 200) {
                     drive.setPoseEstimate(new Pose2d(-35, -60, Math.toRadians(90)));
 
-                    TrajectorySequence traiect = drive.trajectorySequenceBuilder(new Pose2d(-35, -60, Math.toRadians(90)))
+                    TrajectorySequence traiect = drive.trajectorySequenceBuilder( new Pose2d(-35, -60, Math.toRadians(90)))
                             .splineTo(new Vector2d(-40, -35), Math.toRadians(130))
-                            .back(5)
-                            .turn(1)
+                            .addTemporalMarker(()-> robot.colectare.setPower(1))
+                            .waitSeconds(0.5)
+                            .lineToSplineHeading(new Pose2d(-35, -10, Math.toRadians(180) ))
+                            .lineToSplineHeading(new Pose2d(46, -10, Math.toRadians(180)))
                             .lineToSplineHeading(new Pose2d(46, -35, Math.toRadians(180)))
                             .build();
 
@@ -119,10 +121,14 @@ public class RosuFar extends LinearOpMode {
                     drive.setPoseEstimate(new Pose2d(-35, -60, Math.toRadians(90)));
 
                     TrajectorySequence traiect = drive.trajectorySequenceBuilder( new Pose2d(-35, -60, Math.toRadians(90)))
-                            .forward(17.5)
-                            .back(0.1)
+                            .lineToSplineHeading(new Pose2d(-35, -25, Math.toRadians(0) ))
+                            .addDisplacementMarker(()-> robot.colectare.setPower(1))
+                            .waitSeconds(0.5)
+                            .lineToSplineHeading(new Pose2d(-35, -10, Math.toRadians(0) ))
+                            .lineToSplineHeading(new Pose2d(46, -10, Math.toRadians(180)))
                             .lineToSplineHeading(new Pose2d(46, -35, Math.toRadians(180)))
                             .build();
+
 
                     TrajectorySequence panou = drive.trajectorySequenceBuilder(new Pose2d(46, -35, Math.toRadians(180)))
                             .addDisplacementMarker(0, ()->coboara(robot))
@@ -143,11 +149,13 @@ public class RosuFar extends LinearOpMode {
 
                 drive.setPoseEstimate(new Pose2d(-35, -60, Math.toRadians(90)));
 
-                TrajectorySequence traiect = drive.trajectorySequenceBuilder(new Pose2d(-35, -60, Math.toRadians(90)))
-                        .splineTo(new Vector2d(-30, -38), Math.toRadians(65))
-                        .back(5)
-                        .turn(-0.5)
-                        .addDisplacementMarker(()->robot.colectare.setPower(-1))
+                TrajectorySequence traiect = drive.trajectorySequenceBuilder( new Pose2d(-35, -60, Math.toRadians(90)))
+                        .splineTo(new Vector2d(-30, -43), Math.toRadians(60))
+                        .addTemporalMarker(()-> robot.colectare.setPower(1))
+                        .waitSeconds(0.5)
+                        .back(1)
+                        .lineToSplineHeading(new Pose2d(-35, -10, Math.toRadians(180) ))
+                        .lineToSplineHeading(new Pose2d(46, -10, Math.toRadians(180)))
                         .lineToSplineHeading(new Pose2d(46, -35, Math.toRadians(180)))
                         .build();
 
