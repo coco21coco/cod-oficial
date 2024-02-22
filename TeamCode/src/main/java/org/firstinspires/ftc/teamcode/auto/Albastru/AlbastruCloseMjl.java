@@ -92,14 +92,15 @@ public class AlbastruCloseMjl extends LinearOpMode {
                 if (TSE.getLeft() < 200) {
                     drive.setPoseEstimate(new Pose2d(13, -60, Math.toRadians(90)));
 
-                    TrajectorySequence traiect = drive.trajectorySequenceBuilder( new Pose2d(11, 60, Math.toRadians(-90)))
-                            .lineToSplineHeading(new Pose2d(15, 40, Math.toRadians(-45)))
-                            .back(5)
-                            .lineToSplineHeading(new Pose2d(51, 35, Math.toRadians(180)))
-                            .addDisplacementMarker(0, () -> robot.colectare.setPower(1))
+                    TrajectorySequence traiect = drive.trajectorySequenceBuilder(new Pose2d(13, 60, Math.toRadians(270)))
+                            .lineToSplineHeading(new Pose2d(10, 35.9, Math.toRadians(230)))
+                            .addDisplacementMarker(()->robot.colectare.setPower(1))
+                            .back(0.1)
+                            .lineToSplineHeading(new Pose2d(46, 35, Math.toRadians(180)))
+                            .addDisplacementMarker(()->robot.colectare.setPower(-1))
                             .build();
 
-                    TrajectorySequence panou = drive.trajectorySequenceBuilder(new Pose2d(51, 35, Math.toRadians(180)))
+                    TrajectorySequence panou = drive.trajectorySequenceBuilder(new Pose2d(46, 35, Math.toRadians(180)))
                             .addDisplacementMarker(0, ()->coboara(robot))
                             .strafeLeft(18)
                             .back(10)
@@ -120,14 +121,14 @@ public class AlbastruCloseMjl extends LinearOpMode {
 
                     drive.setPoseEstimate(new Pose2d(13, -60, Math.toRadians(90)));
 
-                    TrajectorySequence traiect = drive.trajectorySequenceBuilder( new Pose2d(11, 60, Math.toRadians(-90)))
-                            .lineTo(new Vector2d(11, 34))
-                            .back(5)
-                            .lineToSplineHeading(new Pose2d(51, 35, Math.toRadians(180)))
+                    TrajectorySequence traiect = drive.trajectorySequenceBuilder( new Pose2d(13, 60, Math.toRadians(270)))
+                            .forward(17.5)
+                            .back(3)
+                            .lineToSplineHeading(new Pose2d(46, 40, Math.toRadians(180)))
                             .addDisplacementMarker(0, () -> robot.colectare.setPower(1))
                             .build();
 
-                    TrajectorySequence panou = drive.trajectorySequenceBuilder(new Pose2d(51, 35, Math.toRadians(180)))
+                    TrajectorySequence panou = drive.trajectorySequenceBuilder(new Pose2d(46, 40, Math.toRadians(180)))
                             .addDisplacementMarker(0, ()->coboara(robot))
                             .strafeLeft(18)
                             .back(10)
@@ -145,16 +146,15 @@ public class AlbastruCloseMjl extends LinearOpMode {
             //caz 3
             if (currentRecognition.size() == 0) {
 
-                drive.setPoseEstimate(new Pose2d(13, -60, Math.toRadians(90)));
+                drive.setPoseEstimate(new Pose2d(13, 60, Math.toRadians(270)));
 
-                TrajectorySequence traiect = drive.trajectorySequenceBuilder(new Pose2d(11, 60, Math.toRadians(-90)))
-                        .lineToSplineHeading(new Pose2d(9, 35, Math.toRadians(220)))
-                        .addDisplacementMarker(0, () -> robot.colectare.setPower(1))
-                        .back(5)
-                        .lineToSplineHeading(new Pose2d(51, 35, Math.toRadians(180)))
+                TrajectorySequence traiect = drive.trajectorySequenceBuilder(new Pose2d(17, 35.9, Math.toRadians(230)))
+                        .addDisplacementMarker(()->robot.colectare.setPower(1))
+                        .back(4)
+                        .lineToSplineHeading(new Pose2d(46, 35, Math.toRadians(180)))
                         .build();
 
-                TrajectorySequence panou = drive.trajectorySequenceBuilder(new Pose2d(51, 35, Math.toRadians(180)))
+                TrajectorySequence panou = drive.trajectorySequenceBuilder(new Pose2d(46, 35, Math.toRadians(180)))
                         .addDisplacementMarker(0, ()->coboara(robot))
                         .strafeLeft(18)
                         .back(10)
