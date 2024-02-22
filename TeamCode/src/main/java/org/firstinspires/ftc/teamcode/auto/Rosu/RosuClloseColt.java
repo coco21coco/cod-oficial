@@ -228,7 +228,7 @@ public class RosuClloseColt extends LinearOpMode {
 
         pidGlis.setTargetPosition(1000);
 
-        while(glisPoz <= 800){
+        while(glisPoz <= 800 && opModeIsActive()){
             glisPoz = r.glisiere_dr.getCurrentPosition();
 
             r.glisiere_st.setPower(glisPwr);
@@ -249,7 +249,7 @@ public class RosuClloseColt extends LinearOpMode {
 
         pidGlis.setTargetPosition(0);
 
-        while(glisPoz >= 0){
+        while(glisPoz >= 0 && opModeIsActive()){
             glisPoz = r.glisiere_dr.getCurrentPosition();
 
             r.glisiere_st.setPower(glisPwr);

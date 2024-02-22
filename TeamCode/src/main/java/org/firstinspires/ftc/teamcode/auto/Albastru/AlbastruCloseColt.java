@@ -120,16 +120,16 @@ public class AlbastruCloseColt extends LinearOpMode {
 
                     drive.setPoseEstimate(new Pose2d(13, -60, Math.toRadians(90)));
 
-                    TrajectorySequence traiect = drive.trajectorySequenceBuilder( new Pose2d(11, 60, Math.toRadians(-90)))
-                            .lineTo(new Vector2d(11, 34))
+                    TrajectorySequence traiect = drive.trajectorySequenceBuilder( new Pose2d(13, 60, Math.toRadians(270)))
+                            .forward(17.5)
                             .addDisplacementMarker(0, () -> robot.colectare.setPower(1))
-                            .back(5)
-                            .lineToSplineHeading(new Pose2d(51, 35, Math.toRadians(180)))
+                            .back(0.1)
+                            .lineToSplineHeading(new Pose2d(46, 35, Math.toRadians(180)))
                             .build();
 
-                    TrajectorySequence panou = drive.trajectorySequenceBuilder(new Pose2d(51, 35, Math.toRadians(180)))
+                    TrajectorySequence panou = drive.trajectorySequenceBuilder(new Pose2d(46, 35, Math.toRadians(180)))
                             .addDisplacementMarker(0, ()->coboara(robot))
-                            .strafeRight(18)
+                            .strafeLeft(18)
                             .back(10)
                             .build();
 
@@ -147,16 +147,16 @@ public class AlbastruCloseColt extends LinearOpMode {
 
                 drive.setPoseEstimate(new Pose2d(13, -60, Math.toRadians(90)));
 
-                TrajectorySequence traiect = drive.trajectorySequenceBuilder(new Pose2d(11, 60, Math.toRadians(-90)))
-                        .lineToSplineHeading(new Pose2d(9, 35, Math.toRadians(220)))
+                TrajectorySequence traiect = drive.trajectorySequenceBuilder(new Pose2d(13, 60, Math.toRadians(270)))
+                        .lineToSplineHeading(new Pose2d(17, 35.9, Math.toRadians(230)))
                         .addDisplacementMarker(0, () -> robot.colectare.setPower(1))
-                        .back(5)
-                        .lineToSplineHeading(new Pose2d(51, 35, Math.toRadians(180)))
+                        .back(4)
+                        .lineToSplineHeading(new Pose2d(46, 35, Math.toRadians(180)))
                         .build();
 
-                TrajectorySequence panou = drive.trajectorySequenceBuilder(new Pose2d(51, 35, Math.toRadians(180)))
+                TrajectorySequence panou = drive.trajectorySequenceBuilder(new Pose2d(46, 35, Math.toRadians(180)))
                         .addDisplacementMarker(0, ()->coboara(robot))
-                        .strafeRight(18)
+                        .strafeLeft(18)
                         .back(10)
                         .build();
 
@@ -228,7 +228,7 @@ public class AlbastruCloseColt extends LinearOpMode {
 
         pidGlis.setTargetPosition(1000);
 
-        while(glisPoz <= 800){
+        while(glisPoz <= 800 && opModeIsActive()){
             glisPoz = r.glisiere_dr.getCurrentPosition();
 
             r.glisiere_st.setPower(glisPwr);
@@ -249,7 +249,7 @@ public class AlbastruCloseColt extends LinearOpMode {
 
         pidGlis.setTargetPosition(0);
 
-        while(glisPoz >= 0){
+        while(glisPoz >= 0 && opModeIsActive()){
             glisPoz = r.glisiere_dr.getCurrentPosition();
 
             r.glisiere_st.setPower(glisPwr);
