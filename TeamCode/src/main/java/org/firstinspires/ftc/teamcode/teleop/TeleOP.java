@@ -47,23 +47,7 @@ public class TeleOP extends LinearOpMode {
 
         MultipleTelemetry Telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
-        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        OpenCvWebcam camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
-        camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener()
-        {
-            @Override
-            public void onOpened()
-            {
-                camera.startStreaming(800,448, OpenCvCameraRotation.UPRIGHT);
-            }
 
-            @Override
-            public void onError(int errorCode)
-            {
-
-            }
-        });
-        FtcDashboard.getInstance().startCameraStream(camera, 30);
 
         double speed = 85;
 
@@ -196,7 +180,7 @@ public class TeleOP extends LinearOpMode {
                 urca = false;
             }
 
-            if(glisPos >= 600 && urca == true)
+            if(glisPos >= 500 && urca == true)
                 robot.extinde_cutie();
 
             if(urca == false)
@@ -210,7 +194,7 @@ public class TeleOP extends LinearOpMode {
 
 
 
-            Telemetry.addData("viteza coaie: ", speed);
+            Telemetry.addData("viteza: ", speed);
             Telemetry.addData("heading", Math.toDegrees(drive.getExternalHeading()));
             Telemetry.addData("GLIS ST", robot.glisiere_st.getCurrentPosition());
             Telemetry.addData("GLIS DR", robot.glisiere_dr.getCurrentPosition());

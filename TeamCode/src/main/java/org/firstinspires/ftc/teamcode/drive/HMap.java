@@ -23,8 +23,8 @@ public class HMap {
 
                     avion_armat = 0.8,
                     avion_tras = 0.3,
-                    cutie_dr_extins = 0.7,
-                    cutie_st_extins = 0.3,
+                    cutie_dr_extins = 0.62,
+                    cutie_st_extins = 0.38,
                     cutie_dr_strans = 0.9,
                     cutie_st_strans  = 0.1;
    public void init(HardwareMap hmap){
@@ -56,7 +56,7 @@ public class HMap {
 
        armeaza_avion();
        strange_cutie();
-       deschide_cutie();
+       inchide_cutie();
 
 
    }

@@ -26,7 +26,7 @@ import java.util.List;
 @Autonomous(name = "Albastru Close Colt")
 public class AlbastruCloseColt extends LinearOpMode {
     private static final boolean USE_WEBCAM = true;  // true for webcam, false for phone camera
-    private static final String TFOD_MODEL_FILE = "/sdcard/FIRST/tflitemodels/RED_TSE.tflite";
+    private static final String TFOD_MODEL_FILE = "/sdcard/FIRST/tflitemodels/TES_ALBATRU.tflite";
     private static final String[] LABELS = {
             "TSE"
     };

@@ -93,23 +93,29 @@ public class RosuFar extends LinearOpMode {
                     drive.setPoseEstimate(new Pose2d(-35, -60, Math.toRadians(90)));
 
                     TrajectorySequence traiect = drive.trajectorySequenceBuilder( new Pose2d(-35, -60, Math.toRadians(90)))
-                            .splineTo(new Vector2d(-40, -35), Math.toRadians(130))
+                            .lineToLinearHeading(new Pose2d(-33, -38, Math.toRadians(130)))
                             .addTemporalMarker(()-> robot.colectare.setPower(1))
-                            .waitSeconds(0.5)
-                            .lineToSplineHeading(new Pose2d(-35, -10, Math.toRadians(180) ))
-                            .lineToSplineHeading(new Pose2d(46, -10, Math.toRadians(180)))
-                            .lineToSplineHeading(new Pose2d(46, -35, Math.toRadians(180)))
+                            .waitSeconds(1)
+                            .lineToSplineHeading(new Pose2d(-28, -12, Math.toRadians(180) ))
+                            .lineToSplineHeading(new Pose2d(34, -12, Math.toRadians(180)))
+                            .lineToSplineHeading(new Pose2d(34, -28, Math.toRadians(180)))
                             .build();
 
                     TrajectorySequence panou = drive.trajectorySequenceBuilder(new Pose2d(46, -35, Math.toRadians(180)))
                             .addDisplacementMarker(0, ()->coboara(robot))
-                            .strafeRight(18)
+                            .strafeRight(10)
                             .back(10)
                             .build();
 
                     drive.followTrajectorySequence(traiect);
+                    robot.colectare.setPower(0);
                     urca(robot);
+                    robot.extinde_cutie();
+                    sleep(500);
+                    robot.deschide_cutie();
                     sleep(1000);
+                    robot.strange_cutie();
+                    coboara(robot);
                     drive.followTrajectorySequence(panou);
 
                     telemetry.update();
@@ -121,25 +127,31 @@ public class RosuFar extends LinearOpMode {
                     drive.setPoseEstimate(new Pose2d(-35, -60, Math.toRadians(90)));
 
                     TrajectorySequence traiect = drive.trajectorySequenceBuilder( new Pose2d(-35, -60, Math.toRadians(90)))
-                            .lineToSplineHeading(new Pose2d(-35, -25, Math.toRadians(0) ))
-                            .addDisplacementMarker(()-> robot.colectare.setPower(1))
-                            .waitSeconds(0.5)
-                            .lineToSplineHeading(new Pose2d(-35, -10, Math.toRadians(0) ))
-                            .lineToSplineHeading(new Pose2d(46, -10, Math.toRadians(180)))
-                            .lineToSplineHeading(new Pose2d(46, -35, Math.toRadians(180)))
+                            .lineToSplineHeading(new Pose2d(-50, -26, Math.toRadians(0) ))
+                            .addTemporalMarker(()-> robot.colectare.setPower(1))
+                            .waitSeconds(1)
+                            .lineToSplineHeading(new Pose2d(-50, -15, Math.toRadians(0) ))
+                            .lineToSplineHeading(new Pose2d(34, -15, Math.toRadians(180)))
+                            .lineToSplineHeading(new Pose2d(34, -35, Math.toRadians(180)))
                             .build();
 
 
                     TrajectorySequence panou = drive.trajectorySequenceBuilder(new Pose2d(46, -35, Math.toRadians(180)))
-                            .addDisplacementMarker(0, ()->coboara(robot))
-                            .strafeRight(18)
+                            .strafeRight(10)
                             .back(10)
                             .build();
 
                     drive.followTrajectorySequence(traiect);
+                    robot.colectare.setPower(0);
                     urca(robot);
+                    robot.extinde_cutie();
+                    sleep(500);
+                    robot.deschide_cutie();
                     sleep(1000);
+                    robot.strange_cutie();
+                    coboara(robot);
                     drive.followTrajectorySequence(panou);
+
                 }
 
             }
@@ -150,13 +162,13 @@ public class RosuFar extends LinearOpMode {
                 drive.setPoseEstimate(new Pose2d(-35, -60, Math.toRadians(90)));
 
                 TrajectorySequence traiect = drive.trajectorySequenceBuilder( new Pose2d(-35, -60, Math.toRadians(90)))
-                        .splineTo(new Vector2d(-30, -43), Math.toRadians(60))
+                        .lineToLinearHeading(new Pose2d(-33, -44, Math.toRadians(60)))
                         .addTemporalMarker(()-> robot.colectare.setPower(1))
-                        .waitSeconds(0.5)
-                        .back(1)
-                        .lineToSplineHeading(new Pose2d(-35, -10, Math.toRadians(180) ))
-                        .lineToSplineHeading(new Pose2d(46, -10, Math.toRadians(180)))
-                        .lineToSplineHeading(new Pose2d(46, -35, Math.toRadians(180)))
+                        .waitSeconds(1)
+                        .back(7)
+                        .lineToSplineHeading(new Pose2d(-28, -12, Math.toRadians(0) ))
+                        .lineToSplineHeading(new Pose2d(34, -12, Math.toRadians(180)))
+                        .lineToSplineHeading(new Pose2d(34, -28, Math.toRadians(180)))
                         .build();
 
                 TrajectorySequence panou = drive.trajectorySequenceBuilder(new Pose2d(46, -35, Math.toRadians(180)))
@@ -168,7 +180,12 @@ public class RosuFar extends LinearOpMode {
                 drive.followTrajectorySequence(traiect);
                 robot.colectare.setPower(0);
                 urca(robot);
+                robot.extinde_cutie();
+                sleep(500);
+                robot.deschide_cutie();
                 sleep(1000);
+                robot.strange_cutie();
+                coboara(robot);
                 drive.followTrajectorySequence(panou);
             }
         }
