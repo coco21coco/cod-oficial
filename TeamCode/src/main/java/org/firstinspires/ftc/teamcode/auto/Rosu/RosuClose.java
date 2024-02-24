@@ -98,7 +98,7 @@ public class RosuClose extends LinearOpMode {
                             .addTemporalMarker(()-> robot.colectare.setPower(1))
                             .waitSeconds(1)
                             .lineToSplineHeading(new Pose2d(42, -35, Math.toRadians(180)))
-                            .addDisplacementMarker(()->robot.colectare.setPower(-1))
+
                             .build();
 
                     TrajectorySequence panou = drive.trajectorySequenceBuilder(new Pose2d(42, -35, Math.toRadians(180)))
@@ -139,7 +139,6 @@ public class RosuClose extends LinearOpMode {
 
 
                     TrajectorySequence panou = drive.trajectorySequenceBuilder(new Pose2d(46, -35, Math.toRadians(180)))
-                            .addDisplacementMarker(0, ()->coboara(robot))
                             .strafeRight(18)
                             .back(6)
                             .build();
