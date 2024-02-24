@@ -16,16 +16,14 @@ public class MeepMeepTesting {
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
                 .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
                 .followTrajectorySequence(drive ->
-                        drive.trajectorySequenceBuilder(new Pose2d(-35, 60, Math.toRadians(270)))
-                                .lineToSplineHeading(new Pose2d(-35, 25, Math.toRadians(0) ))
-                                //.addDisplacementMarker(()-> robot.colectare.setPower(1))
-                                .waitSeconds(0.5)
-                                .lineToSplineHeading(new Pose2d(-35, 10, Math.toRadians(0) ))
-                                .lineToSplineHeading(new Pose2d(46, 10, Math.toRadians(180)))
-                                .lineToSplineHeading(new Pose2d(46, 35, Math.toRadians(180)))
+                        drive.trajectorySequenceBuilder(new Pose2d(13, 60, Math.toRadians(270)))
+                                .lineToLinearHeading(new Pose2d(15, 38, Math.toRadians(230)))
+                                .waitSeconds(1)
+                                .back(4)
+                                .lineToSplineHeading(new Pose2d(45, 47, Math.toRadians(180)))
                                 .strafeLeft(18)
                                 .back(10)
-                .build()
+                                .build()
                 );
 
         meepMeep.setBackground(MeepMeep.Background.FIELD_CENTERSTAGE_JUICE_DARK)
