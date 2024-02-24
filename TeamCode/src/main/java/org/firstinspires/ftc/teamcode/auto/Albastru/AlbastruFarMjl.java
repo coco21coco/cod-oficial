@@ -92,13 +92,13 @@ public class AlbastruFarMjl extends LinearOpMode {
                 if (TSE.getLeft() < 200) {
                     drive.setPoseEstimate(new Pose2d(-31, 35, Math.toRadians(-45)));
 
-                    TrajectorySequence traiect = drive.trajectorySequenceBuilder( new Pose2d(-35, 60, Math.toRadians(270)))
-                            .splineTo(new Vector2d(-40, 35), Math.toRadians(230))
+                    TrajectorySequence traiect = drive.trajectorySequenceBuilder(new Pose2d(-35, 60, Math.toRadians(270)))
+                            .lineToLinearHeading(new Pose2d(-33, 38, Math.toRadians(230)))
                             .addTemporalMarker(()-> robot.colectare.setPower(1))
-                            .waitSeconds(0.5)
-                            .lineToSplineHeading(new Pose2d(-35, 10, Math.toRadians(180) ))
-                            .lineToSplineHeading(new Pose2d(46, 10, Math.toRadians(180)))
-                            .lineToSplineHeading(new Pose2d(46, 35, Math.toRadians(180)))
+                            .waitSeconds(1)
+                            .lineToSplineHeading(new Pose2d(-28, 12, Math.toRadians(180) ))
+                            .lineToSplineHeading(new Pose2d(34, 12, Math.toRadians(180)))
+                            .lineToSplineHeading(new Pose2d(34, 28, Math.toRadians(180)))
                             .build();
 
                     TrajectorySequence panou = drive.trajectorySequenceBuilder(new Pose2d(46, 35, Math.toRadians(180)))
@@ -122,13 +122,13 @@ public class AlbastruFarMjl extends LinearOpMode {
 
                     drive.setPoseEstimate(new Pose2d(-31, 35, Math.toRadians(-45)));
 
-                    TrajectorySequence traiect = drive.trajectorySequenceBuilder(new Pose2d(-35, 60, Math.toRadians(270)))
-                            .lineToSplineHeading(new Pose2d(-35, 25, Math.toRadians(0) ))
-                            //.addDisplacementMarker(()-> robot.colectare.setPower(1))
-                            .waitSeconds(0.5)
-                            .lineToSplineHeading(new Pose2d(-35, 10, Math.toRadians(0) ))
-                            .lineToSplineHeading(new Pose2d(46, 10, Math.toRadians(180)))
-                            .lineToSplineHeading(new Pose2d(46, 35, Math.toRadians(180)))
+                    TrajectorySequence traiect = drive.trajectorySequenceBuilder(new Pose2d(-35, 60, Math.toRadians(-45)))
+                            .lineToSplineHeading(new Pose2d(-50, 26, Math.toRadians(0) ))
+                            .addTemporalMarker(()-> robot.colectare.setPower(1))
+                            .waitSeconds(1)
+                            .lineToSplineHeading(new Pose2d(-50, 15, Math.toRadians(0) ))
+                            .lineToSplineHeading(new Pose2d(34, 15, Math.toRadians(180)))
+                            .lineToSplineHeading(new Pose2d(34, 35, Math.toRadians(180)))
                             .build();
 
                     TrajectorySequence panou = drive.trajectorySequenceBuilder(new Pose2d(46, 35, Math.toRadians(180)))
@@ -151,14 +151,14 @@ public class AlbastruFarMjl extends LinearOpMode {
 
                 drive.setPoseEstimate(new Pose2d(-35, 60, Math.toRadians(-90)));
 
-                TrajectorySequence traiect = drive.trajectorySequenceBuilder(new Pose2d(-35, 60, Math.toRadians(270)))
-                        .splineTo(new Vector2d(-30, 43), Math.toRadians(210))
+                TrajectorySequence traiect = drive.trajectorySequenceBuilder( new Pose2d(-35, -60, Math.toRadians(-90)))
+                        .lineToLinearHeading(new Pose2d(-33, 44, Math.toRadians(60)))
                         .addTemporalMarker(()-> robot.colectare.setPower(1))
-                        .waitSeconds(0.5)
-                        .back(1)
-                        .lineToSplineHeading(new Pose2d(-35, 10, Math.toRadians(180) ))
-                        .lineToSplineHeading(new Pose2d(46, 10, Math.toRadians(180)))
-                        .lineToSplineHeading(new Pose2d(46, 35, Math.toRadians(180)))
+                        .waitSeconds(1)
+                        .back(7)
+                        .lineToSplineHeading(new Pose2d(-28, 12, Math.toRadians(0) ))
+                        .lineToSplineHeading(new Pose2d(34, 12, Math.toRadians(180)))
+                        .lineToSplineHeading(new Pose2d(34, 28, Math.toRadians(180)))
                         .build();
 
                 TrajectorySequence panou = drive.trajectorySequenceBuilder(new Pose2d(46, 35, Math.toRadians(180)))
