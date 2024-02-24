@@ -186,10 +186,10 @@ public class TeleOP extends LinearOpMode {
             if(urca == false)
                 robot.strange_cutie();
 
-            if(gamepad1.y)
+            if(gamepad1.triangle)
                 robot.deschide_cutie();
 
-            if(gamepad1.x)
+            if(gamepad1.square)
                 robot.inchide_cutie();
 
 
